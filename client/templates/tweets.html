@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Scramble Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="{{url_for('static', filename='css/bootstrap.css')}}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+    <link
+      href="{{url_for('static', filename='css/theme.css')}}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+    <link
+      href="{{url_for('static', filename='css/custom.css')}}"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700%7CMerriweather:300,300i"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+    />
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <h1
+          class="text-center"
+          style="font-family: 'Open Sans', sans-serif; font-weight: 600"
+        >
+          Scramble
+        </h1>
+        <h3 id="title" class="text-center">Loading Data...</h3>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div id="the_box">
+      <h5 id="title2"></h5>
+      <!-- <input type="search" class="light-table-filter" data-table="order-table" placeholder="Filter" id="filter" onkeyup="filter_this()"> -->
+      <!-- <button onclick="exportTableToCSV()">Export To CSV</button> -->
+      <table
+        class="border--round table--alternate-row table-responsive"
+        id="the_table1"
+        style="width: 100%"
+      >
+        <thead id="thead"></thead>
+        <tbody id="tbody" align="left"></tbody>
+      </table>
+    </div>
+  </body>
+  <script src="{{url_for('static', filename='js/jquery-3.1.1.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/jquery.steps.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.4/b-html5-1.5.4/kt-2.5.0/datatables.min.css"
+  />
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.4/b-html5-1.5.4/kt-2.5.0/datatables.min.js"
+  ></script>
+  <script>
+    // set_title();
+    on_load();
+
+    function initialize_table() {
+      var op = getUrlParameter("op");
+
+      var target;
+      var order = [];
+      if (op == "entities") {
+        order = [[1, "desc"]];
+        target = [1];
+      }
+      $("#the_table1").DataTable({
+        // dom: 'Bfrtip',
+        dom: "Bfrtip",
+        pageLength: 100,
+        order: order,
+        lengthMenu: [
+          [100, 200, 500, -1],
+          [100, 200, 500, "All"],
+        ],
+        // paging: true,
+        aaSorting: [],
+        columnDefs: [
+          {
+            className: "dt-right",
+            targets: target,
+          },
+        ],
+        drawCallback: function () {
+          var page_min = 100;
+          var $api = this.api();
+          var pages = $api.page.info().pages;
+          var rows = $api.data().length;
+          set_title(rows);
+          // Tailor the settings based on the row count
+          if (rows <= page_min) {
+            $("#the_table_paginate").hide();
+            // Not enough rows for really any features, hide filter/pagination/length
+          } else {
+            // SHow everything
+            $("#the_table_paginate").show();
+          }
+        },
+        buttons: [
+          {
+            extend: "csv",
+            text: "Export to CSV",
+            filename: function () {
+              var id = topic;
+              var op = getUrlParameter("op");
+              var searchVal = $(".dataTables_filter input").val();
+              var name = "";
+              if (searchVal.length > 0) {
+                name = id + "_" + op + "_" + searchVal;
+              } else {
+                name = id + "_" + op;
+              }
+              return name;
+            },
+            exportOptions: {
+              modifier: {
+                page: "all",
+              },
+            },
+          },
+          // ,"pageLength"
+        ],
+      });
+    }
+
+    function getUrlParameter(sParam) {
+      var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split("&"),
+        sParameterName,
+        i;
+
+      for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split("=");
+
+        if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined
+            ? true
+            : decodeURIComponent(sParameterName[1]);
+        }
+      }
+    }
+
+    function set_title() {
+      var op = getUrlParameter("op");
+      if (!op) {
+        $("#title").text("All users");
+      } else {
+        $("#title").text("Showing results for " + op);
+      }
+    }
+
+    function has_local(query) {
+      var test_val = JSON.parse(localStorage.getItem(query));
+      if (!test_val) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function on_load() {
+      console.log("Onload");
+      var op = getUrlParameter("op");
+      console.log(op);
+      get_data();
+    }
+
+    function get_data() {
+      var op = getUrlParameter("op");
+      var end_point = "";
+      var myKeyVals = {};
+      if (op) {
+        end_point = "/get_user";
+        myKeyVals["email"] = op;
+      } else {
+        end_point = "/get_users";
+      }
+      console.log("Getting data", end_point);
+
+      $.ajax({
+        type: "GET",
+        url: end_point,
+        data: myKeyVals,
+        // dataType: 'json',
+        success: function (response) {
+          if (op) {
+            display_user(response);
+          } else {
+            display_users(response);
+          }
+        },
+      });
+    }
+
+    function display_user(data) {
+      console.log(data);
+      var text = "";
+      console.log(data);
+      var tweet_table_html = "";
+      set_title();
+      var thead = "<tr><th>Word</th><th>Input word(s)</th></tr>";
+      for (var key in data) {
+        tweet_table_html +=
+          "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>";
+      }
+      $("#thead").html(thead);
+      $("#tbody").html(tweet_table_html);
+      initialize_table();
+    }
+
+    function display_users(data) {
+      // set_title(data.length);
+      var text = "";
+      console.log(data);
+      var tweet_table_html = "";
+      set_title();
+      var thead = "<tr><th>Email</th></tr>";
+      for (var i = 0; i < data.length; i++) {
+        tweet_table_html +=
+          "<tr><td>" +
+          "<a href='/dashboard?op=" +
+          data[i]["email"] +
+          "' target='_blank'>" +
+          data[i]["email"] +
+          "</a>" +
+          "</td></tr>";
+      }
+      $("#thead").html(thead);
+      $("#tbody").html(tweet_table_html);
+      initialize_table();
+    }
+
+    function sortByFrequency(array) {
+      var frequency = {};
+      // set all initial frequencies for each word to zero
+      array.forEach(function (value) {
+        frequency[value] = 0;
+      });
+      // create new array with words and their frequencies
+      var uniques = array.filter(function (value) {
+        return ++frequency[value] == 1;
+      });
+      // sort words by abc order
+      // return frequency;
+
+      var dict = frequency;
+      var items = Object.keys(dict).map(function (key) {
+        return [key, dict[key]];
+      });
+
+      // Sort the array based on the second element
+      items.sort(function (first, second) {
+        return second[1] - first[1];
+      });
+      return items;
+    }
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+</html>
