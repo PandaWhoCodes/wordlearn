@@ -14,3 +14,4 @@ python-dotenv
 authlib>=0.14.1
 six
 gunicorn==20.0.4
+SQLAlchemy>=0.8.0

@@ -15,6 +15,7 @@ from database.database_functions import (
     get_users,
     get_conversation,
 )
+from flask_sqlalchemy import SQLAlchemy
 
 from os import environ as env
 from configparser import ConfigParser
@@ -33,6 +34,8 @@ from werkzeug.exceptions import HTTPException
 #parser.read("dev.ini")
 #HOST = parser.get("website", "host")
 #PORT = int(parser.get("website", "port"))
+
+
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -62,6 +65,10 @@ class CustomJSONEncoder(JSONEncoder):
 app = Flask(__name__, template_folder="client/templates", static_folder="client/static")
 app.json_encoder = CustomJSONEncoder
 app.secret_key = constants.SECRET_KEY
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fgcvoexjvkhbau:fc57a05fd5b64d07fb6f190ebefe586357b34d910db070bff86e4d8c6f582993@ec2-3-251-0-202.eu-west-1.compute.amazonaws.com:5432/d8pm5u3ib1h51s'
+    
+
 oauth = OAuth(app)
 
 # we use auth0 for the authentication.
@@ -72,6 +79,8 @@ def handle_auth_error(ex):
     response = jsonify(message=str(ex))
     response.status_code = (ex.code if isinstance(ex, HTTPException) else 500)
     return response
+
+
 auth0 = oauth.register(
     'auth0',
     client_id=AUTH0_CLIENT_ID,
