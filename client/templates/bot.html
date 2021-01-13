@@ -25,8 +25,14 @@
         <div class="col-md-8" style="" class="chat_div">
             <div class="chat_window">
                 <div class="top_menu">
-                    <div class="title" id="title">Word Scramble</div>
+                    <div class="logo"></div>
+                    <div class="head">
+                        <div class="title" id="title">Word Scramble</div>
+                        <div class="tag_line" id="tag_line"> tagline </div>
+                    </div>
+                    <div class="help" > <a href="#" > Help </a> </div>
                 </div>
+                <div class="worddisplay">Image</div>
                 <ul class="messages" id="messages"></ul>
                 <div class="bottom_wrapper clearfix">
                     <div class="message_input_wrapper">
@@ -38,7 +44,25 @@
                         </div> -->
                         <button id="submit_message" type="button" class="btn btn-success" style="color:black" onclick="send_message();">Send</button>
                     </div>
+                    <div class="control_buttons">
+                      <div class="command_button" id="command_button">
+                        <button id="start" type="button" class="btn btn-success" style="color: black" >New</button>
+                      </div>
+                      <div class="command_button" id="command_button">
+                        <button id="start" type="button" class="btn btn-success" style="color: black" >Skip</button>
+                      </div>
+                      <div class="command_button" id="command_button">
+                        <button id="start" type="button" class="btn btn-success" style="color: black" >Clear</button>
+                      </div>
+                      <div class="command_button" id="command_button">
+                        <button id="start" type="button" class="btn btn-success" style="color: black" >Shuffle</button>
+                      </div>
+                      <div class="command_button" id="command_button">
+                        <button id="start" type="button" class="btn btn-success" style="color: black" >Help</button>
+                      </div>
+                    </div>
                 </div>
+                
             </div>
             <div class="message_template">
                 <li class="message">
