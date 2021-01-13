@@ -70,7 +70,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fgcvoexjvkhbau:fc57a05fd5b64
     
 
 oauth = OAuth(app)
-
+db = SQLAlchemy(app)
 # we use auth0 for the authentication.
 # should run on localhost:4000 or 127.0.0.1:4000 for the auth0
 # to accept
