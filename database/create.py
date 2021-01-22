@@ -1,19 +1,15 @@
 import pymysql
-from configparser import ConfigParser, NoSectionError
+from dotenv import load_dotenv, find_dotenv
+from os import environ as env
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
-parser = ConfigParser()
-parser.read("dev.ini")
-try:
-    db_name = parser.get("db", "db_name")
-    db_host = parser.get("db", "db_host")
-    db_user = parser.get("db", "db_user")
-    db_pass = parser.get("db", "db_pass")
-except NoSectionError:
-    parser.read("../dev.ini")
-    db_name = parser.get("db", "db_name")
-    db_host = parser.get("db", "db_host")
-    db_user = parser.get("db", "db_user")
-    db_pass = parser.get("db", "db_pass")
+db_name = env.get("db_name")
+db_host = env.get("db_host")
+db_user = env.get("db_user")
+db_pass = env.get("db_pass")
+
 
 
 def create_connection(db):
@@ -24,10 +20,10 @@ def create_connection(db):
     """
     try:
         db = pymysql.connect(
-            host='localhost',
-            user='akshaya',
-            password='achuakshay',
-            database='API')
+            host=db_host,
+            user=db_user,
+            password=db_pass,
+            database=db_name)
         return db
     except Exception as e:
         print("Connection to the database could not be created: ", e)

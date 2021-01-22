@@ -1,5 +1,5 @@
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="help" > <a href="#" > Help </a> </div>
                 </div>
-                <div class="worddisplay">Image</div>
+                <div class="worddisplay"><p ></p></div>
                 <ul class="messages" id="messages"></ul>
                 <div class="bottom_wrapper clearfix">
                     <div class="message_input_wrapper">
@@ -46,19 +46,19 @@
                     </div>
                     <div class="control_buttons">
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" >New</button>
+                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="new_button();">New</button>
                       </div>
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" >Skip</button>
+                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="skip_button();">Skip</button>
                       </div>
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" >Clear</button>
+                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="clear_button();">Clear</button>
                       </div>
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" >Shuffle</button>
+                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="shuffle_button();">Shuffle</button>
                       </div>
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" >Help</button>
+                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="help_button();">Help</button>
                       </div>
                     </div>
                 </div>
@@ -83,6 +83,7 @@
 <footer>
 </footer>
 <script src="{{url_for('static',filename='js/main.js')}}"></script>
+<script src="{{url_for('static',filename='js/circle.js')}}"></script>
 
   <script type="text/javascript">
 //   get_old_conversation();
@@ -168,10 +169,10 @@ function get_old_conversation()
 }
 
     function send_message(start=false)
-    {
+    { 
       var user_inp = $("#msg_input").val();
       var myKeyVals = {"text":user_inp};
-      console.log(myKeyVals);
+      
       $("#msg_input").val("");
     showUserMessage(user_inp,getCurrentTimestamp());
     $.ajax({
@@ -179,14 +180,58 @@ function get_old_conversation()
       url:  "/" + "input",
       data: myKeyVals,
       // dataType: 'json',
+      
       success: function(response) {
-          console.log(response);
+          
+          changeWord(response['word']);
+          console.log(response['word']);
           showBotMessage(response["text"],getCurrentTimestamp());
       }
         });
       }
 
+function button_controls(input){
+  
+    myKeyVals = {"text" : input}
+    $.ajax({
+      type: 'POST',
+      url:  "/" + "input",
+      data: myKeyVals,
+      // dataType: 'json',
+      
+      success: function(response) {
+          
+          changeWord(response['word']);
+          console.log(response['word']);
+          showBotMessage(response["text"],getCurrentTimestamp());
+      }
+        });
 
+}
+
+function new_button(){
+  button_controls('/new');
+}
+
+function skip_button(){
+  button_controls('/skip');
+
+}
+function shuffle_button(){
+  button_controls('/shuffle');
+}
+function clear_button(){
+
+}
+function help_button(){
+
+}
+
+function changeWord(word){
+  $('p').circleType({position: 'absolute', dir: 1, radius: 200});
+  $("p").text(word);
+ 
+}
 function scrollToBottom(id){
    var div = document.getElementById(id);
    div.scrollTop = div.scrollHeight - div.clientHeight;

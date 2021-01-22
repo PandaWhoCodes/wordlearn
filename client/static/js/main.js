@@ -1,6 +1,7 @@
 var Message;
 $messages = $('.messages');
 Message = function (arg) {
+	    
 		this.text = arg.text, this.message_side = arg.message_side, this.time = arg.time;
 		this.draw = function (_this) {
 				return function () {
@@ -14,6 +15,7 @@ Message = function (arg) {
 						}, 0);
 				};
 		}(this);
+		
 		return this;
 };
 function addBr(text){

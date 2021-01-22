@@ -39,7 +39,7 @@ def get_new_word():
 
 
 def is_possible(og_word, word):
-    print(og_word, word, "ISPOSSIBLE")
+    
     if word.lower() not in dictionaryItems:
         return "not in dictionary"
     og_freq = get_freq(og_word)
@@ -59,7 +59,7 @@ def shuffle_word(word):
 
 def handle_commands(command):
     command = command.lower()
-    print(command, "COMMAND")
+    
     if command in ["/new", "/skip"]:
         new_word = get_new_word()
         insert_into_user_words(
@@ -79,6 +79,7 @@ def handle_commands(command):
             ]
         )
         word = shuffle_word(word).upper()
+        session['current_word'] = word
         return "Your reshuffled word is " + word
     elif command == "/show":
         if "current_word" in session:
@@ -92,7 +93,7 @@ def handle_commands(command):
 
 
 def get_user_words(email):
-    print(get_user(email))
+   
     data = get_user_data(get_user(email)[0][0])
     final_data = {}
     for user_word in data:
@@ -124,7 +125,8 @@ def conversation_log(func):
 
 @conversation_log
 def send_text(text):
-    return jsonify({"text": text})
+    
+    return jsonify(text)
 
 
 def split_text(text):
@@ -132,30 +134,44 @@ def split_text(text):
 
 
 def handle_input(message):
-
+    
     try:
+        response = {}
         if message.startswith("/"):
-            print('starts with /')
-            return handle_commands(message)
-
-        og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
-        print(og_word)
-        bad_words = []
-        for word in split_text(message):
-            is_proper = is_possible(og_word, word)
-            if is_proper == "valid":
-                insert_into_user_data(
-                    get_user(session[JWT_PAYLOAD]["name"])[0][0], og_word, word
-                )
-            else:
-                bad_words.append(word + " is " + is_proper)
-        print(bad_words)
-        if bad_words:
-            return "</br>".join(bad_words)
+            
+            response['text'] = handle_commands(message) 
+            
         else:
-            return "Input word is valid"
+
+            og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
+            
+            bad_words = []
+            for word in split_text(message):
+                is_proper = is_possible(og_word, word)
+                if is_proper == "valid":
+                    insert_into_user_data(
+                        get_user(session[JWT_PAYLOAD]["name"])[0][0], og_word, word
+                    )
+                else:
+                    bad_words.append(word + " is " + is_proper)
+            
+            if bad_words:
+                response['text'] = "</br>".join(bad_words)
+                
+            else:
+                response['text'] = "Input word is valid"
+        word = (
+            session["current_word"]
+            if "current_word" in session
+            else ''
+            
+        )
+        response['word'] = word
+        return response
+                
     except Exception as e:
-        return "Error " + str(e) + "</br>Try /start command to restart"
+        response['text'] = "Error " + str(e) + "</br>Try /start command to restart"
+        return response
 
 
 if __name__ == "__main__":

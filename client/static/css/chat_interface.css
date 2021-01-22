@@ -283,11 +283,15 @@ body {
 
 .control_buttons {
   position: relative;
-  width: 100%;
+  width: 83%;
+  height: 90%;
   background-color: #fff;
-  padding: 20px 20px;
+  padding: 10px 0;
   /*position: absolute;*/
   bottom: 0;
+  display: flex;
+  justify-content: space-between;
+
 
 }
 .control_buttons .command_button{
@@ -354,4 +358,16 @@ input{
 	position : relative;
 	background : none;
 }
+}
+#curved1 {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  width: 400px;
+}
+
+#curved2 {
+  position: absolute;
+  
+  
 }

@@ -161,8 +161,8 @@ def render_dashboard():
 
 @app.route("/get_users", methods=["GET"])
 def return_users():
-    print("HELLOOO")
-    print(get_users())
+    
+    
     return jsonify(get_users())
 
 
@@ -191,9 +191,13 @@ def get_input():
     Function that handles the API calls
     :return: 200 HTTP code
     """
+    
     data = request.form
     query = data["text"]
-    return send_text(handle_input(query))
+    text = handle_input(query)
+    
+    
+    return jsonify(text)
 
 
 if __name__ == "__main__":

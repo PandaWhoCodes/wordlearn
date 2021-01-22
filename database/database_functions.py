@@ -5,10 +5,13 @@ try:
 except ImportError:
     from create import create_connection
 import pymysql
+from dotenv import load_dotenv, find_dotenv
+from os import environ as env
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
-parser = ConfigParser()
-parser.read("dev.ini")
-db_name = parser.get("db", "db_name")
+db_name = env.get("db_name")
 
 
 def run_query(query, args=[], conn=None):
