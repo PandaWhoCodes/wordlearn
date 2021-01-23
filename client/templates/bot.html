@@ -32,7 +32,7 @@
                     </div>
                     <div class="help" > <a href="#" > Help </a> </div>
                 </div>
-                <div class="worddisplay"><p ></p></div>
+                <div class="worddisplay" id="worddisplay"></div>
                 <ul class="messages" id="messages"></ul>
                 <div class="bottom_wrapper clearfix">
                     <div class="message_input_wrapper">
@@ -58,7 +58,7 @@
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="shuffle_button();">Shuffle</button>
                       </div>
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="help_button();">Help</button>
+                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="hint_button();">Hint</button>
                       </div>
                     </div>
                 </div>
@@ -167,6 +167,33 @@ function get_old_conversation()
    var div = document.getElementById(id);
    div.scrollTop = div.scrollHeight - div.clientHeight;
 }
+    
+function circularText(text, radius, classIndex) {
+  
+  word = [];
+  let letter;
+  for (var i=0; i<text.length; i++){
+    letter = text.charAt(i);
+    if (letter>='A' && letter<='Z'){
+      word.push(text.charAt(i));
+      word.push(' ');
+    }
+  }
+  console.log(word)
+  classIndex = document.getElementsByClassName("worddisplay")[classIndex];
+  console.log(classIndex)
+    
+  var deg = 360 / word.length,
+    origin = 0;
+
+  word.forEach((ea) => {
+    ea = `<p style='height:${radius}px;position:absolute;transform:rotate(${origin}deg);transform-origin:0 100%'>${ea}</p>`;
+    //console.log(ea);
+    classIndex.innerHTML += ea;
+    origin += deg;
+  });
+}
+
 
     function send_message(start=false)
     { 
@@ -221,15 +248,17 @@ function shuffle_button(){
   button_controls('/shuffle');
 }
 function clear_button(){
-
+  $("#messages").load("#messages .messages >*");
 }
-function help_button(){
+function hint_button(){
 
 }
 
 function changeWord(word){
-  $('p').circleType({position: 'absolute', dir: 1, radius: 200});
-  $("p").text(word);
+  //console.log(word);
+  $('#worddisplay').text('');
+  circularText(word, 60, 0);
+  
  
 }
 function scrollToBottom(id){
