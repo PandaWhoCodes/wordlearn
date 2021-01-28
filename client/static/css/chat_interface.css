@@ -93,6 +93,7 @@ body {
 
 .worddisplay {
   position: relative;
+  text: 25px;
   height: 150px;
   border: 10px black;
   text-align: center;

@@ -187,7 +187,7 @@ function circularText(text, radius, classIndex) {
     origin = 0;
 
   word.forEach((ea) => {
-    ea = `<p style='height:${radius}px;position:absolute;transform:rotate(${origin}deg);transform-origin:0 100%'>${ea}</p>`;
+    ea = `<p style='font-size:25px;height:${radius}px;position:absolute;transform:rotate(${origin}deg);transform-origin:0 100%'>${ea}</p>`;
     //console.log(ea);
     classIndex.innerHTML += ea;
     origin += deg;

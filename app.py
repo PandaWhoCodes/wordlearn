@@ -21,12 +21,12 @@ from configparser import ConfigParser
 from flask.json import JSONEncoder
 from datetime import datetime
 from authlib.integrations.flask_client import OAuth
-from constants import *
+
 from six.moves.urllib.parse import urlencode
 from functools import wraps
 from utils import handle_input, send_text, get_user_words, conversation_log
 from dotenv import load_dotenv, find_dotenv
-import constants
+
 from werkzeug.exceptions import HTTPException
 # Getting the environment settings
 #parser = ConfigParser()
@@ -40,12 +40,16 @@ ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
 
-AUTH0_CALLBACK_URL = env.get(constants.AUTH0_CALLBACK_URL)
-AUTH0_CLIENT_ID = env.get(constants.AUTH0_CLIENT_ID)
-AUTH0_CLIENT_SECRET = env.get(constants.AUTH0_CLIENT_SECRET)
-AUTH0_DOMAIN = env.get(constants.AUTH0_DOMAIN)
+AUTH0_CALLBACK_URL = env.get('AUTH0_CALLBACK_URL')
+AUTH0_CLIENT_ID = env.get('AUTH0_CLIENT_ID')
+AUTH0_CLIENT_SECRET = env.get('AUTH0_CLIENT_SECRET')
+AUTH0_DOMAIN = env.get('AUTH0_DOMAIN')
 AUTH0_BASE_URL = 'https://' + AUTH0_DOMAIN
-AUTH0_AUDIENCE = env.get(constants.AUTH0_AUDIENCE)
+AUTH0_AUDIENCE = env.get('AUTH0_AUDIENCE')
+
+PROFILE_KEY = 'profile'
+SECRET_KEY = env.get('SECRET_KEY')
+JWT_PAYLOAD = 'jwt_payload'
 
 # used for encoding datetime into iso format whenever sending to the frontend using the jsonify function
 class CustomJSONEncoder(JSONEncoder):
@@ -63,7 +67,7 @@ class CustomJSONEncoder(JSONEncoder):
 
 app = Flask(__name__, template_folder="client/templates", static_folder="client/static")
 app.json_encoder = CustomJSONEncoder
-app.secret_key = constants.SECRET_KEY
+app.secret_key = SECRET_KEY
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fgcvoexjvkhbau:fc57a05fd5b64d07fb6f190ebefe586357b34d910db070bff86e4d8c6f582993@ec2-3-251-0-202.eu-west-1.compute.amazonaws.com:5432/d8pm5u3ib1h51s'
     
@@ -97,7 +101,7 @@ auth0 = oauth.register(
 def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        if constants.PROFILE_KEY not in session:
+        if PROFILE_KEY not in session:
             return redirect("/login")
         return f(*args, **kwargs)
 
@@ -120,8 +124,8 @@ def callback_handling():
     resp = auth0.get("userinfo")
     userinfo = resp.json()
 
-    session[constants.JWT_PAYLOAD] = userinfo
-    session[constants.PROFILE_KEY] = {
+    session[JWT_PAYLOAD] = userinfo
+    session[PROFILE_KEY] = {
         "user_id": userinfo["sub"],
         "name": userinfo["name"],
         "picture": userinfo["picture"],
@@ -148,9 +152,9 @@ def render_home():
 @app.route("/bot")
 @login_required
 def render_bot():
-    user = get_user(session[constants.JWT_PAYLOAD]["name"])
+    user = get_user(session[JWT_PAYLOAD]["name"])
     if len(user) == 0:
-        insert_into_users(session[constants.JWT_PAYLOAD]["name"])
+        insert_into_users(session[JWT_PAYLOAD]["name"])
     return render_template("bot.html"), 200
 @app.route("/dashboard")
 @login_required
@@ -180,7 +184,7 @@ def conversation():
     :return: json
     TODO: check why jsonify is done in database functions and not in flask app
     """
-    return jsonify(get_conversation(session[constants.JWT_PAYLOAD]["name"]))
+    return jsonify(get_conversation(session[JWT_PAYLOAD]["name"]))
 
 
 @app.route("/input", methods=["GET", "POST"])
