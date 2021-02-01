@@ -19,6 +19,7 @@ def create_connection(db):
     :return: Connection object or None
     """
     try:
+        print(type(db_host))
         db = pymysql.connect(
             host=db_host,
             user=db_user,

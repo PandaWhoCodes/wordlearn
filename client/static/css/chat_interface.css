@@ -91,15 +91,18 @@ body {
   float: right;
 }
 
+.displaywrapper{
+  height: 70%;
+}
 .worddisplay {
   position: relative;
-  text: 25px;
-  height: 150px;
+  
   border: 10px black;
   text-align: center;
-  padding: 30px 335;
+  padding: 0 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   background-color: rgb(245, 245, 237);
+  vertical-align: middle;
   
 }
 
@@ -112,7 +115,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 57%;
+  height: 100%;
   overflow: scroll;
 }
 .messages .message {

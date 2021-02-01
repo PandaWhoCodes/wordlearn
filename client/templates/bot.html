@@ -32,8 +32,10 @@
                     </div>
                     <div class="help" > <a href="#" > Help </a> </div>
                 </div>
-                <div class="worddisplay" id="worddisplay"></div>
-                <ul class="messages" id="messages"></ul>
+                <div class="displaywrapper">
+                    <div class="worddisplay" id="worddisplay"></div>
+                    <ul class="messages" id="messages"></ul>
+                  </div>
                 <div class="bottom_wrapper clearfix">
                     <div class="message_input_wrapper">
                         <input id="msg_input" class="message_input" placeholder="Use /start to get a new word and start the game" />
@@ -169,29 +171,54 @@ function get_old_conversation()
 }
     
 function circularText(text, radius, classIndex) {
-  
+  document.getElementById("worddisplay").style.whiteSpace = "pre-wrap"; 
   word = [];
   let letter;
   for (var i=0; i<text.length; i++){
     letter = text.charAt(i);
-    if (letter>='A' && letter<='Z'){
-      word.push(text.charAt(i));
-      word.push(' ');
+    if (letter>='!' && letter<='Z' ){
+      word.push(letter);
+      
     }
   }
-  console.log(word)
+  
   classIndex = document.getElementsByClassName("worddisplay")[classIndex];
-  console.log(classIndex)
+ 
     
-  var deg = 360 / word.length,
-    origin = 0;
+  let length = word.length;
+  let circle = '';
+  let lc = length-1;
+  let rc=0;
+  let row = Math.floor((length-4)/2)+2;
+  if (length%2==1){
+    row+=1;
+  }
+  let half_row = Math.floor(row/2);
+  let sm;
+  for(let i=0;i<row;i++){
+    let left = Math.abs(half_row-i);       
+    let sl = '&nbsp'.repeat(left);
+   
+    if (i == 0){
+      sm = "&nbsp";
+    }
+    else{
+      sm = '&nbsp&nbsp&nbsp&nbsp&nbsp'.repeat((half_row-left));
+    
+    }
+    
+    let left_char = word[lc] + '&nbsp'; 
+    lc-=1;
+    let right_char = word[rc] + '&nbsp';
+    rc+=1
+    if (i==row-1 && length%2==1){
+        circle+= sl+left_char;}
+    else{        
+        circle+= sl+left_char+sm+sm+right_char+"<br>";}
+    
 
-  word.forEach((ea) => {
-    ea = `<p style='font-size:25px;height:${radius}px;position:absolute;transform:rotate(${origin}deg);transform-origin:0 100%'>${ea}</p>`;
-    //console.log(ea);
-    classIndex.innerHTML += ea;
-    origin += deg;
-  });
+    }
+    document.getElementById("worddisplay").innerHTML = circle; 
 }
 
 
@@ -249,6 +276,7 @@ function shuffle_button(){
 }
 function clear_button(){
   $("#messages").load("#messages .messages >*");
+  $('#worddisplay').text('');
 }
 function hint_button(){
 
