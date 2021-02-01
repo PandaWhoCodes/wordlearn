@@ -99,6 +99,8 @@ body {
   
   border: 10px black;
   text-align: center;
+  font-size: 30;
+  font-family: Verdana, sans-serif;
   padding: 0 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   background-color: rgb(245, 245, 237);
@@ -117,6 +119,7 @@ body {
   margin: 0;
   height: 100%;
   overflow: scroll;
+  font-size: 20px;
 }
 .messages .message {
   clear: both;

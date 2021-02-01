@@ -38,7 +38,7 @@
                   </div>
                 <div class="bottom_wrapper clearfix">
                     <div class="message_input_wrapper">
-                        <input id="msg_input" class="message_input" placeholder="Use /start to get a new word and start the game" />
+                        <input id="msg_input" class="message_input" placeholder="" />
                     </div>
                     <div class="send_message" id="send_button">
                         <!-- <div class="icon" onclick="send_message()">
@@ -90,6 +90,10 @@
   <script type="text/javascript">
 //   get_old_conversation();
 //   set_title();
+
+window.onload = function start(){
+  button_controls('/start');
+}
 
 var input = document.getElementById("msg_input");
 get_old_conversation();
@@ -172,8 +176,9 @@ function get_old_conversation()
     
 function circularText(text, radius, classIndex) {
   document.getElementById("worddisplay").style.whiteSpace = "pre-wrap"; 
-  word = [];
+  let word = [];
   let letter;
+  console.log(text);
   for (var i=0; i<text.length; i++){
     letter = text.charAt(i);
     if (letter>='!' && letter<='Z' ){
@@ -183,41 +188,10 @@ function circularText(text, radius, classIndex) {
   }
   
   classIndex = document.getElementsByClassName("worddisplay")[classIndex];
- 
-    
-  let length = word.length;
-  let circle = '';
-  let lc = length-1;
-  let rc=0;
-  let row = Math.floor((length-4)/2)+2;
-  if (length%2==1){
-    row+=1;
-  }
-  let half_row = Math.floor(row/2);
-  let sm;
-  for(let i=0;i<row;i++){
-    let left = Math.abs(half_row-i);       
-    let sl = '&nbsp'.repeat(left);
-   
-    if (i == 0){
-      sm = "&nbsp";
-    }
-    else{
-      sm = '&nbsp&nbsp&nbsp&nbsp&nbsp'.repeat((half_row-left));
-    
-    }
-    
-    let left_char = word[lc] + '&nbsp'; 
-    lc-=1;
-    let right_char = word[rc] + '&nbsp';
-    rc+=1
-    if (i==row-1 && length%2==1){
-        circle+= sl+left_char;}
-    else{        
-        circle+= sl+left_char+sm+sm+right_char+"<br>";}
-    
-
-    }
+  let circle ='';
+  circle = "&nbsp".repeat(2)+word[5]+"&nbsp".repeat(2)+word[0]+"<br>";
+  circle += "&nbsp"+word[4] + "&nbsp".repeat(8) + word[1]+"<br>";
+  circle += "&nbsp".repeat(2) +word[3] + "&nbsp".repeat(2)+word[2]+"<br>";
     document.getElementById("worddisplay").innerHTML = circle; 
 }
 
@@ -236,9 +210,9 @@ function circularText(text, radius, classIndex) {
       // dataType: 'json',
       
       success: function(response) {
-          
+          console.log('response',response['word']);
           changeWord(response['word']);
-          console.log(response['word']);
+
           showBotMessage(response["text"],getCurrentTimestamp());
       }
         });

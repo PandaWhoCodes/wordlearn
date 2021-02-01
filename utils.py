@@ -20,7 +20,7 @@ dictionaryItems = []
 with open("words.txt", "r") as f:
     dictionaryItems = set(f.read().lower().split("\n"))
     for items in dictionaryItems:
-        if len(items) >= 6:
+        if len(items) == 6:
             bigwords.add(items)
 
 
@@ -39,7 +39,8 @@ def get_new_word():
 
 
 def is_possible(og_word, word):
-    
+    if word == "":
+        return "invalid"
     if word.lower() not in dictionaryItems:
         return "not in dictionary"
     og_freq = get_freq(og_word)
@@ -56,10 +57,9 @@ def shuffle_word(word):
     random.shuffle(str_var)
     return "  ".join(str_var)
 
-
 def handle_commands(command):
     command = command.lower()
-    
+    print('in handle commands')
     if command in ["/new", "/skip"]:
         new_word = get_new_word()
         insert_into_user_words(
@@ -69,7 +69,7 @@ def handle_commands(command):
         session["current_word"] = new_word
         return "Your new word is: " + new_word
     elif command == "/start":
-        return """You will get a scrambelled word. Enter as many words as possible </br>Enter <b>/new</b> to get a new word.</br>Enter <b>/show</b> display your currernt word.</br>Enter <b>/shuffle</b> to suffle your current word.</br></br>You can enter a word one by one or seperated by comma."""
+        return """You will get a scrambelled word. Enter as many words as possible </br>You can enter a word one by one or seperated by comma."""
     elif command == "/shuffle":
         word = (
             session["current_word"]
@@ -88,6 +88,7 @@ def handle_commands(command):
             return get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[
                 0
             ]["word"]
+
     else:
         return "Wrong Command"
 
@@ -132,15 +133,21 @@ def send_text(text):
 def split_text(text):
     return text.lower().replace(" ", "").split(",")
 
+def add_score(is_proper):
+    if "score" not in session:
+        session["score"] = 0
+    if is_proper == "valid":
+        session["score"] += 1
+
 
 def handle_input(message):
-    
+    print('in handle input')
     try:
         response = {}
         if message.startswith("/"):
             
             response['text'] = handle_commands(message) 
-            
+            print('text response', response['text'])    
         else:
 
             og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
@@ -148,6 +155,7 @@ def handle_input(message):
             bad_words = []
             for word in split_text(message):
                 is_proper = is_possible(og_word, word)
+                add_score(is_proper)
                 if is_proper == "valid":
                     insert_into_user_data(
                         get_user(session[JWT_PAYLOAD]["name"])[0][0], og_word, word
@@ -166,7 +174,9 @@ def handle_input(message):
             else ''
             
         )
+        print('text',response['text'])
         response['word'] = word
+        print('word',word,'input',message)
         return response
                 
     except Exception as e:
