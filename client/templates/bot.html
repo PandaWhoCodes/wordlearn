@@ -178,7 +178,7 @@ function circularText(text, radius, classIndex) {
   document.getElementById("worddisplay").style.whiteSpace = "pre-wrap"; 
   let word = [];
   let letter;
-  console.log(text);
+  
   for (var i=0; i<text.length; i++){
     letter = text.charAt(i);
     if (letter>='!' && letter<='Z' ){
@@ -210,7 +210,7 @@ function circularText(text, radius, classIndex) {
       // dataType: 'json',
       
       success: function(response) {
-          console.log('response',response['word']);
+          
           changeWord(response['word']);
 
           showBotMessage(response["text"],getCurrentTimestamp());
@@ -230,7 +230,7 @@ function button_controls(input){
       success: function(response) {
           
           changeWord(response['word']);
-          console.log(response['word']);
+          
           showBotMessage(response["text"],getCurrentTimestamp());
       }
         });

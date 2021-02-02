@@ -56,6 +56,7 @@ def insert_into_user_words(user_id, word):
 
 
 def get_last_user_word(user_id):
+   
     sql_query = (
         """SELECT word FROM user_words where user_id =%s ORDER BY id DESC limit 1;"""
     )

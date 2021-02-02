@@ -14,7 +14,7 @@ Message = function (arg) {
 						}, 0);
 				};
 		}(this);
-		
+		console.log(this.text);
 		return this;
 };
 function addBr(text){

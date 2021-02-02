@@ -35,7 +35,7 @@ def get_freq(word):
 
 
 def get_new_word():
-    return random.sample(bigwords, 1)[0]
+    return random.sample(bigwords, 1)[0].upper()
 
 
 def is_possible(og_word, word):
@@ -59,7 +59,7 @@ def shuffle_word(word):
 
 def handle_commands(command):
     command = command.lower()
-    print('in handle commands')
+ 
     if command in ["/new", "/skip"]:
         new_word = get_new_word()
         insert_into_user_words(
@@ -69,14 +69,21 @@ def handle_commands(command):
         session["current_word"] = new_word
         return "Your new word is: " + new_word
     elif command == "/start":
+        word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])
+       
+        if word == ():
+            word = get_new_word()
+        else:
+            word = word[0][0]
+       
+        session["current_word"] = word.upper()
         return """You will get a scrambelled word. Enter as many words as possible </br>You can enter a word one by one or seperated by comma."""
+
     elif command == "/shuffle":
         word = (
             session["current_word"]
             if "current_word" in session
-            else get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][
-                "word"
-            ]
+            else get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
         )
         word = shuffle_word(word).upper()
         session['current_word'] = word
@@ -87,7 +94,7 @@ def handle_commands(command):
         else:
             return get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[
                 0
-            ]["word"]
+            ][0]
 
     else:
         return "Wrong Command"
@@ -141,13 +148,13 @@ def add_score(is_proper):
 
 
 def handle_input(message):
-    print('in handle input')
+
     try:
         response = {}
         if message.startswith("/"):
             
             response['text'] = handle_commands(message) 
-            print('text response', response['text'])    
+             
         else:
 
             og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
@@ -168,15 +175,16 @@ def handle_input(message):
                 
             else:
                 response['text'] = "Input word is valid"
+                 
         word = (
             session["current_word"]
             if "current_word" in session
             else ''
-            
-        )
-        print('text',response['text'])
+       )
+
+       
         response['word'] = word
-        print('word',word,'input',message)
+       
         return response
                 
     except Exception as e:
