@@ -40,6 +40,7 @@ def get_new_word():
 
 def is_possible(og_word, word):
     if word == "":
+
         return "invalid"
     if word.lower() not in dictionaryItems:
         return "not in dictionary"
@@ -161,7 +162,7 @@ def handle_input(message):
             
             bad_words = []
             for word in split_text(message):
-                is_proper = is_possible(og_word, word)
+                is_proper = is_possible(og_word, word.upper())
                 add_score(is_proper)
                 if is_proper == "valid":
                     insert_into_user_data(
