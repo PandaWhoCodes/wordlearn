@@ -174,7 +174,7 @@ body {
   
 }
 .validinvalid_words{
-  display: inline-table;
+  display: inline-block;
   border: 1px black;
   border-style: solid;
   height: 58%;
