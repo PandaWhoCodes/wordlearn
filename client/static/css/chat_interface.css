@@ -9,26 +9,26 @@ body {
 
 .chat_window {
   /* position: absolute; */
-  width: 90%;
+  width: 85%;
   max-width: 800px;
   /* max-height: 660px; */
-  height: 98%;
+  height: 90%;
   border-radius: 10px;
   background-color: #fff;
   left: 50%;
   top: 50%;
   /* transform: translateX(-50%) translateY(-50%); */
   /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); */
-  background-color: #f8f8f8;
   overflow: hidden;
 }
 
 .top_menu {
   background-color: #fff;
   width: 100%;
-  padding: 13px 0px;
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
-  height: 85px;
+  /*padding: 13px 0px; */
+  /*box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+  height: 85px;*/
+  height: 65px;
   
 }
 .top_menu .buttons {
@@ -90,27 +90,133 @@ body {
   display: inline-block;
   float: right;
 }
-
+.hover_bkgr_fricc{
+  
+  cursor:pointer;
+  display:none;
+  height:100%;
+  
+  text-align:center;
+  top:0;
+  width:100%;
+  z-index:10000;
+}
+.hover_bkgr_fricc .helper{
+  display:inline-block;
+  height:100%;
+  vertical-align:middle;
+}
+.hover_bkgr_fricc > div {
+  background-color: #fff;
+  border: solid 5px blue;
+  display: inline-block;
+  height: auto;
+  max-width: 551px;
+  min-height: 100px;
+  vertical-align: middle;
+  width: 60%;
+  position: relative;
+  border-radius: 8px;
+  padding: 15px 5%;
+}
+.popupCloseButton {
+  background-color: #fff;
+  border: 3px solid #999;
+  border-radius: 50px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: arial;
+  font-weight: bold;
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 25px;
+  line-height: 30px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+.popupCloseButton:hover {
+  background-color: #ccc;
+}
+.trigger_popup_fricc {
+  cursor: pointer;
+  font-size: 20px;
+  
+  display: inline-block;
+  font-weight: bold;
+}
 .displaywrapper{
-  height: 70%;
+  height: 67%;
 }
 .worddisplay {
-  position: relative;
   
-  border: 10px black;
   text-align: center;
+  border: 10px black;
+  line-height: 8px;
   font-size: 30;
   font-family: Verdana, sans-serif;
   padding: 0 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  background-color: rgb(245, 245, 237);
-  vertical-align: middle;
+  height: 28%;
+  
+  
+}
+.validinvalid{
+  
+  text-align: center;
+  border: 10px black;
+  height: 350px;
+  font-size: 30;
+  font-family: Verdana, sans-serif;
+  padding: 20 20;
+ /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);*/
+  
+}
+.validinvalid_words{
+  display: inline-table;
+  border: 1px black;
+  border-style: solid;
+  height: 300px;
+  max-height: 300px;
+  width: 40%;
+  text-align: center;
+  border-radius: 6px;
+  overflow-y: auto;
   
 }
 
+.validinvalid_list{
+  list-style-type: none;
+  font-size: 20;
+  padding: 0;
+  margin:0;
+}
+.buttondisplay{
+  display: inline;
+}
+
+.wordbutton{
+  background-color: white;
+  
+  color: black;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  border-radius: 12px;
+}
+
+.scrambledword {
+  text-align: center;
+  font-size: 30px ;
+}
 .circText{
   background-color: rgb(245, 245, 237);
 }
+
 
 .messages {
   position: relative;
@@ -249,30 +355,34 @@ body {
 }
 
 .bottom_wrapper {
+  align-items: center;
   position: relative;
   width: 100%;
   background-color: #fff;
-  padding: 20px 20px;
+  padding: 20px 120px;
   /*position: absolute;*/
   bottom: 0;
-}
+  }
 .bottom_wrapper .message_input_wrapper {
   display: inline-block;
+  align-items: center;
+  text-align: center;
   height: calc(100% - 93%);
-  /* border-radius: 25px; */
+  border-radius: 25px; 
   border: 1px solid #bcbdc0;
-  width: calc(100% - 120px);
+  width: 100%;
   position: relative;
-  padding: 0 20px;
+  padding: 10 60px;
 }
-.bottom_wrapper .message_input_wrapper .message_input {
+.bottom_wrapper .message_input_wrapper .word_entered {
   border: none;
   height: 100%;
   box-sizing: border-box;
-  width: calc(100% - 40px);
+  width: calc(100% - 100px);
   position: absolute;
   outline-width: 0;
   color: gray;
+  font-size: 30px; 
 }
 .bottom_wrapper .send_message {
   width: 110px;
@@ -294,8 +404,8 @@ body {
 
 .control_buttons {
   position: relative;
-  width: 83%;
-  height: 90%;
+  width: 100%;
+  height: 10%;
   background-color: #fff;
   padding: 10px 0;
   /*position: absolute;*/
@@ -307,7 +417,7 @@ body {
 }
 .control_buttons .command_button{
   width: 110px;
-  height: calc(100% - 93%);
+  height: 50px;
   display: inline-block;
   /* border-radius: 50px;
   background-color: #ffffff;
@@ -357,6 +467,8 @@ body {
   width:150px;
     margin-right:3px;
 }
+
+
 @media (max-width: 500px) {
 label{
 	position : relative;
@@ -382,3 +494,5 @@ input{
   
   
 }
+
+

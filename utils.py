@@ -17,7 +17,7 @@ JWT_PAYLOAD = "jwt_payload"
 
 bigwords = set()
 dictionaryItems = []
-with open("words.txt", "r") as f:
+with open("words_set.txt", "r") as f:
     dictionaryItems = set(f.read().lower().split("\n"))
     for items in dictionaryItems:
         if len(items) == 6:
@@ -39,10 +39,8 @@ def get_new_word():
 
 
 def is_possible(og_word, word):
-    if word == "":
-
-        return "invalid"
     if word.lower() not in dictionaryItems:
+        print('not in dictionary')
         return "not in dictionary"
     og_freq = get_freq(og_word)
     for ch, val in get_freq(word).items():
@@ -63,22 +61,29 @@ def handle_commands(command):
  
     if command in ["/new", "/skip"]:
         new_word = get_new_word()
+        session["current_ans"] = []
         insert_into_user_words(
             get_user(session[JWT_PAYLOAD]["name"])[0][0], new_word
         )
         new_word = shuffle_word(new_word).upper()
         session["current_word"] = new_word
-        return "Your new word is: " + new_word
+        return ''
     elif command == "/start":
         word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])
-       
+        session["current_ans"] = []
+        session['score'] = 0
         if word == ():
             word = get_new_word()
+            
+            insert_into_user_words(
+            get_user(session[JWT_PAYLOAD]["name"])[0][0], word
+            )
         else:
             word = word[0][0]
+            
        
         session["current_word"] = word.upper()
-        return """You will get a scrambelled word. Enter as many words as possible </br>You can enter a word one by one or seperated by comma."""
+        return ''
 
     elif command == "/shuffle":
         word = (
@@ -91,7 +96,7 @@ def handle_commands(command):
         return "Your reshuffled word is " + word
     elif command == "/show":
         if "current_word" in session:
-            return "Your current word is: " + session["current_word"]
+            return ''
         else:
             return get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[
                 0
@@ -159,23 +164,21 @@ def handle_input(message):
         else:
 
             og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
-            
-            bad_words = []
-            for word in split_text(message):
+            word = message
+            if word not in session["current_ans"]: 
+                session["current_ans"].append(word)
                 is_proper = is_possible(og_word, word.upper())
                 add_score(is_proper)
                 if is_proper == "valid":
                     insert_into_user_data(
                         get_user(session[JWT_PAYLOAD]["name"])[0][0], og_word, word
                     )
+                    response['text'] = 'valid'
                 else:
-                    bad_words.append(word + " is " + is_proper)
-            
-            if bad_words:
-                response['text'] = "</br>".join(bad_words)
-                
+                    response['text'] = 'invalid'
             else:
-                response['text'] = "Input word is valid"
+                response['text'] = ''
+            
                  
         word = (
             session["current_word"]
@@ -185,7 +188,8 @@ def handle_input(message):
 
        
         response['word'] = word
-       
+        response['score'] = session['score']
+        print(message,response['text'])
         return response
                 
     except Exception as e:
@@ -195,4 +199,4 @@ def handle_input(message):
 
 if __name__ == "__main__":
 
-    print(get_user_words("akshaya.20.2@protosem.tech"))
+    print(get_user_words("akshayanagaraj00@gmail.com"))

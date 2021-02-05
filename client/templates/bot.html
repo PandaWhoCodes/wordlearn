@@ -20,7 +20,7 @@
 <body>
     <div class="container">
     <!-- <br/> -->
-    <div class="row">
+    <div class="row" style="padding-block-start: 30px;">
       <div class="col-md-2"></div>
         <div class="col-md-8" style="" class="chat_div">
             <div class="chat_window">
@@ -28,31 +28,71 @@
                     <div class="logo"></div>
                     <div class="head">
                         <div class="title" id="title">Word Scramble</div>
-                        <div class="tag_line" id="tag_line"> tagline </div>
+                        <div class="tag_line" id="tag_line"> A game to improve your vocabulary</div>
                     </div>
-                    <div class="help" > <a href="#" > Help </a> </div>
+                    <div class="help" > <a class="trigger_popup_fricc" > Help </a> </div>
+                    <div class="hover_bkgr_fricc">
+                      <span class="helper"></span>
+                      <div>
+                          <div class="popupCloseButton">&times;</div>
+                          <p>You have received a scrambled word<br />Guess the words from the given letters and gain score</p>
+                      </div>
+                  </div>
                 </div>
                 <div class="displaywrapper">
-                    <div class="worddisplay" id="worddisplay"></div>
-                    <ul class="messages" id="messages"></ul>
+                    <div class="validinvalid">
+                        <div class="validinvalid_words" id="valid">
+                            <div>Valid words</div>
+                            <ul class='validinvalid_list' id="valid_list"></ul>
+                        </div>
+                        <div class="validinvalid_words" id="invalid">
+                            <div>Invalid words</div>
+                            <ul class='validinvalid_list' id='invalid_list'></ul>
+                        </div>
+                    </div>
+                    <div class="worddisplay" id="worddisplay">
+                        <div class="buttondisplay"></div>
+                        <div class="buttondisplay">
+                            <input type="button" onclick="firstletter();" class="wordbutton" id="0">
+                        </div>
+                        <div class="buttondisplay"></div>
+                        <div class="buttondisplay">
+                            <input type="button" onclick="secondletter();" class="wordbutton" id="5">
+                        </div><br>
+                        <div class="buttondisplay"></div>
+                        <div class="buttondisplay">
+                            <input type="button" onclick="thirdletter();" class="wordbutton" id="1">
+                        </div>
+                        <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp</div>
+                        <div class="buttondisplay" id='score'>0</div>
+                        <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp</div>
+                        <div class="buttondisplay">
+                            <input type="button" onclick="fourthletter();" class="wordbutton" id="4">
+                        </div><br>
+                        <div class="buttondisplay"></div>
+                        <div class="buttondisplay">
+                            <input type="button" onclick="fiffthletter();" class="wordbutton" id="2">
+                        </div>
+                        <div class="buttondisplay"></div>
+                        <div class="buttondisplay">
+                            <input type="button" onclick="sixthletter();" class="wordbutton" id="3">
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    <div class='Scrambledword'><br>Scrambled Word</div>
+                    
                   </div>
                 <div class="bottom_wrapper clearfix">
                     <div class="message_input_wrapper">
-                        <input id="msg_input" class="message_input" placeholder="" />
-                    </div>
-                    <div class="send_message" id="send_button">
-                        <!-- <div class="icon" onclick="send_message()">
-                            <div class="text" style="color:black">Send</div>
-                        </div> -->
-                        <button id="submit_message" type="button" class="btn btn-success" style="color:black" onclick="send_message();">Send</button>
+                        <div id="word_entered" class="word_entered"></div> 
                     </div>
                     <div class="control_buttons">
                       <div class="command_button" id="command_button">
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="new_button();">New</button>
                       </div>
-                      <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="skip_button();">Skip</button>
-                      </div>
+                      
                       <div class="command_button" id="command_button">
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="clear_button();">Clear</button>
                       </div>
@@ -60,23 +100,13 @@
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="shuffle_button();">Shuffle</button>
                       </div>
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="hint_button();">Hint</button>
+                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="enter_button();">Enter</button>
                       </div>
                     </div>
                 </div>
                 
             </div>
-            <div class="message_template">
-                <li class="message">
-                    <div class="avatar f_avatar"></div>
-                    <div class="text_wrapper">
-                        <div class="text"></div>
-                        <div class="timestamp"></div>
-                    </div>
-                </li>
-            </div>
-            <br />
-            <br />
+            
         </div>
         <div class="col-md-2"></div>
   </div>
@@ -93,32 +123,27 @@
 
 window.onload = function start(){
   button_controls('/start');
+  $(".trigger_popup_fricc").click(function(){
+       $('.hover_bkgr_fricc').show();
+    });
+  $('.hover_bkgr_fricc').click(function(){
+      $('.hover_bkgr_fricc').hide();
+    });
+  $('.popupCloseButton').click(function(){
+      $('.hover_bkgr_fricc').hide();
+    });
 }
 
-var input = document.getElementById("msg_input");
-get_old_conversation();
-// Execute a function when the user releases a key on the keyboard
-input.addEventListener("keyup", function(event) {
-  // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById("submit_message").click();
-  }
-});
-
-
-  var sp = "";
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-   $("#send_button").hide();
+var sp = "";
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    $("#send_button").hide();
 //    $(".message_input_wrapper").append('<span id="sp" style="font-size: x-large;">Press Enter to Submit</span>');
    // $("#msg_input").attr("placeholder", "");
-   $(".bottom_wrapper").css({"padding": "0px 0px"});
-   $("#msg_input").attr("onfocus", "hid();");
-   $("#msg_input").attr("onblur", "vi();");
-   $(".message_input_wrapper").css("width", "98%");
-   sp = document.getElementById('sp');
+    $(".bottom_wrapper").css({"padding": "0px 0px"});
+    $("#msg_input").attr("onfocus", "hid();");
+    $("#msg_input").attr("onblur", "vi();");
+    $(".message_input_wrapper").css("width", "98%");
+    sp = document.getElementById('sp');
 
 }
 
@@ -134,92 +159,28 @@ function vi(){
 	}
 }
 
-function get_old_conversation()
-    {
-      $.ajax({
-      type: 'GET',
-      url:  "/" + "conversation",
-      // dataType: 'json',
-      success: function(response) {
-        if(response.length)
-        {show_messages(response);
+var word =[]
+function circularText(text) {
+    word = [];
+    let letter;
+    for (var i=0; i<text.length; i++){
+        letter = text.charAt(i);
+        if (letter>='!' && letter<='Z' ){
+            word.push(letter);
+      
         }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        alert('error occured');
-      }
-    });
     }
-  function show_messages(data)
-    {
-      for(var i=0;i<data.length;i++)
-      {
-        // console.log(data[i]["time"]);
-        data[i]["time"] = data[i]["time"].replace("T","UTC");
-        var date = new Date(data[i]["time"]).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
-        date = new Date(date);
-        if(data[i]["is_bot"] == 1)
-        {
-          showBotMessage(data[i]["convo"],date,true);
-        }
-        else
-        {
-          showUserMessage(data[i]["convo"],date,true);
-        }
-      }
-      scrollToBottom("messages");
-    }
-    function scrollToBottom(id){
-   var div = document.getElementById(id);
-   div.scrollTop = div.scrollHeight - div.clientHeight;
+    console.log(word,'word');
+    $("#0").prop("value",word[0]);
+    $("#1").prop("value",word[1]);
+    $("#2").prop("value",word[2]);
+    $("#3").prop("value",word[3]);
+    $("#4").prop("value",word[4]);
+    $("#5").prop("value",word[5]);
 }
-    
-function circularText(text, radius, classIndex) {
-  document.getElementById("worddisplay").style.whiteSpace = "pre-wrap"; 
-  let word = [];
-  let letter;
-  
-  for (var i=0; i<text.length; i++){
-    letter = text.charAt(i);
-    if (letter>='!' && letter<='Z' ){
-      word.push(letter);
-      
-    }
-  }
-  
-  classIndex = document.getElementsByClassName("worddisplay")[classIndex];
-  let circle ='';
-  circle = "&nbsp".repeat(2)+word[5]+"&nbsp".repeat(2)+word[0]+"<br>";
-  circle += "&nbsp"+word[4] + "&nbsp".repeat(8) + word[1]+"<br>";
-  circle += "&nbsp".repeat(2) +word[3] + "&nbsp".repeat(2)+word[2]+"<br>";
-    document.getElementById("worddisplay").innerHTML = circle; 
-}
-
-
-    function send_message(start=false)
-    { 
-      var user_inp = $("#msg_input").val();
-      var myKeyVals = {"text":user_inp};
-      
-      $("#msg_input").val("");
-    showUserMessage(user_inp,getCurrentTimestamp());
-    $.ajax({
-      type: 'POST',
-      url:  "/" + "input",
-      data: myKeyVals,
-      // dataType: 'json',
-      
-      success: function(response) {
-          
-          changeWord(response['word']);
-
-          showBotMessage(response["text"],getCurrentTimestamp());
-      }
-        });
-      }
 
 function button_controls(input){
-  
+    var text = '';
     myKeyVals = {"text" : input}
     $.ajax({
       type: 'POST',
@@ -228,45 +189,110 @@ function button_controls(input){
       // dataType: 'json',
       
       success: function(response) {
-          
-          changeWord(response['word']);
-          
-          showBotMessage(response["text"],getCurrentTimestamp());
+          text = response['text'];
+          circularText(response['word']);
+          console.log(response['score']);
+          if (text=='valid' || text=='invalid'){
+              display_words(input,text); 
+              $('#score').text(response['score']);   
+          }
       }
+      
         });
+    
 
+}
+
+function display_words(input,response){
+    console.log(input,response);
+    if (response == "valid"){
+      text = '<li>' + input + '</li>'
+      $("#valid_list").append(text);
+    }
+    else{
+      text = '<li>' + input + '</li>'
+      $("#invalid_list").append(text);
+    }
 }
 
 function new_button(){
+  clear_button();
+  $('#valid_list').empty();
+  $('#invalid_list').empty();
   button_controls('/new');
 }
-
-function skip_button(){
-  button_controls('/skip');
-
-}
+function delete_button() {
+  if  ($("#word_entered").text() != ""){
+        console.log("not empty")
+        let letter = $("#word_entered").text().slice(-1);
+        let class_name ='#' + String(word.indexOf(letter));
+        let new_word = $("#word_entered").text().slice(0,-1);
+        $("#word_entered").text(new_word);
+        
+        $(class_name).prop('disabled',false);
+  }
+} 
 function shuffle_button(){
+  clear_button();
   button_controls('/shuffle');
+
 }
+
 function clear_button(){
-  $("#messages").load("#messages .messages >*");
-  $("#msg_input").val("");
+  console.log('clear');
+  $("#word_entered").text("");
+  $("#0").prop("disabled",false);
+  $("#1").prop("disabled",false);
+  $("#2").prop("disabled",false);
+  $("#3").prop("disabled",false);
+  $("#4").prop("disabled",false);
+  $("#5").prop("disabled",false);
 }
-function hint_button(){
 
-}
-
-function changeWord(word){
-  //console.log(word);
-  $('#worddisplay').text('');
-  circularText(word, 60, 0);
+function enter_button(){
+  if ($("#word_entered").text() != ""){
+    let word_entered = $("#word_entered").text();
+    button_controls(word_entered);
+    clear_button();
+    
+  }
   
- 
 }
-function scrollToBottom(id){
-   var div = document.getElementById(id);
-   div.scrollTop = div.scrollHeight - div.clientHeight;
+
+function firstletter(){
+    let exist = $("#word_entered").text() + word[0];
+    $("#word_entered").text(exist);
+    $("#0").prop('disabled',true);
 }
+function secondletter(){
+    let exist = $("#word_entered").text() + word[5];
+    $("#word_entered").text(exist);
+    $("#5").prop('disabled',true);
+}
+
+function thirdletter(){
+    let exist = $("#word_entered").text() + word[1];
+    $("#word_entered").text(exist);
+    $("#1").prop('disabled',true);
+}
+
+function fourthletter(){
+    let exist = $("#word_entered").text() + word[4];
+    $("#word_entered").text(exist);
+    $("#4").prop('disabled',true);
+}
+function fiffthletter(){
+    let exist = $("#word_entered").text() + word[2];
+    $("#word_entered").text(exist);
+    $("#2").prop('disabled',true);
+}
+function sixthletter(){
+    let exist = $("#word_entered").text() + word[3];
+    $("#word_entered").text(exist);
+    $("#3").prop('disabled',true);
+}
+
+
 function capitalize(s)
 {
   if (typeof s !== 'string')
