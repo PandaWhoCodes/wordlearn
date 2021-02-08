@@ -502,19 +502,16 @@ input{
   
 }
 @media only screen and (max-width: 600px) {
-  div.scrambledword {
-    display: none;
-  }
+ 
 
-  div.logo{
+  .top_menu .logo{
     width: 15%;
   }
-  div.head{
+  .top_menu .help{
+    width: 15% ;
+  }
+  .top_menu .head{
     width: 70%;
-
-  }
-  div.help{
-    width: 15%;
   }
 }
 
