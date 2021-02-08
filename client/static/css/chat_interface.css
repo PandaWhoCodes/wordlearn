@@ -505,5 +505,16 @@ input{
   div.scrambledword {
     display: none;
   }
+
+  div.logo{
+    width: 15%;
+  }
+  div.head{
+    width: 70%;
+
+  }
+  div.help{
+    width: 15%;
+  }
 }
 
