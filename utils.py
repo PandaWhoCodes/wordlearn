@@ -164,7 +164,7 @@ def handle_input(message):
             og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[
                 0
             ][0]
-            word = message
+            word = message.upper()
             if word not in session["current_ans"]:
                 session["current_ans"].append(word)
                 is_proper = is_possible(og_word, word.upper())

@@ -57,28 +57,28 @@
                     <div class="worddisplay" id="worddisplay">
                         <div class="buttondisplay"><br><br> </div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="firstletter();" class="wordbutton" id="0">
+                            <input type="button" onclick="firstletter();" class="wordbutton" id="0" disabled="true">
                         </div>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="secondletter();" class="wordbutton" id="5">
+                            <input type="button" onclick="secondletter();" class="wordbutton" id="5" disabled="true">
                         </div><br>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="thirdletter();" class="wordbutton" id="1">
+                            <input type="button" onclick="thirdletter();" class="wordbutton" id="1" disabled="true">
                         </div>
                         <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp</div>
                         <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp</div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="fourthletter();" class="wordbutton" id="4">
+                            <input type="button" onclick="fourthletter();" class="wordbutton" id="4" disabled="true">
                         </div><br>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="fiffthletter();" class="wordbutton" id="2">
+                            <input type="button" onclick="fiffthletter();" class="wordbutton" id="2" disabled="true">
                         </div>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="sixthletter();" class="wordbutton" id="3">
+                            <input type="button" onclick="sixthletter();" class="wordbutton" id="3" disabled="true">
                         </div>
                         
                         
@@ -89,7 +89,7 @@
                   </div>
                 <div class="bottom_wrapper clearfix">
                     <div class='scrambledword'><br>Scrambled Word</div>
-                    <div class="message_input_wrapper" id="word_entered"></div>
+                    <input type="text" class="message_input_wrapper" id="word_entered" />
                     <div class="control_buttons">
                       <div class="command_button" id="command_button">
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="new_button();">New</button>
@@ -182,6 +182,7 @@ function circularText(text) {
     $("#3").prop("value",word[3]);
     $("#4").prop("value",word[4]);
     $("#5").prop("value",word[5]);
+    
 }
 
 function button_controls(input){
@@ -211,6 +212,7 @@ function button_controls(input){
 
 function display_words(input,response){
     console.log(input,response);
+    input = input.toUpperCase();
     if (response == "valid"){
       text = $("#valid_list").html() + input + ', '
       $("#valid_list").html(text);
@@ -227,17 +229,7 @@ function new_button(){
   $('#invalid_list').empty();
   button_controls('/new');
 }
-function delete_button() {
-  if  ($("#word_entered").text() != ""){
-        console.log("not empty")
-        let letter = $("#word_entered").text().slice(-1);
-        let class_name ='#' + String(word.indexOf(letter));
-        let new_word = $("#word_entered").text().slice(0,-1);
-        $("#word_entered").text(new_word);
-        
-        $(class_name).prop('disabled',false);
-  }
-} 
+
 function shuffle_button(){
   clear_button();
   button_controls('/shuffle');
@@ -246,18 +238,13 @@ function shuffle_button(){
 
 function clear_button(){
   console.log('clear');
-  $("#word_entered").text("");
-  $("#0").prop("disabled",false);
-  $("#1").prop("disabled",false);
-  $("#2").prop("disabled",false);
-  $("#3").prop("disabled",false);
-  $("#4").prop("disabled",false);
-  $("#5").prop("disabled",false);
+  $("#word_entered").val("");
+ 
 }
 
 function enter_button(){
-  if ($("#word_entered").text() != ""){
-    let word_entered = $("#word_entered").text();
+  if ($("#word_entered").val() != ""){
+    let word_entered = $("#word_entered").val();
     button_controls(word_entered);
     clear_button();
     
