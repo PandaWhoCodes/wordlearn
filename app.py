@@ -28,28 +28,28 @@ from utils import handle_input, send_text, get_user_words, conversation_log
 from dotenv import load_dotenv, find_dotenv
 
 from werkzeug.exceptions import HTTPException
-# Getting the environment settings
-#parser = ConfigParser()
-#parser.read("dev.ini")
-#HOST = parser.get("website", "host")
-#PORT = int(parser.get("website", "port"))
 
+# Getting the environment settings
+# parser = ConfigParser()
+# parser.read("dev.ini")
+# HOST = parser.get("website", "host")
+# PORT = int(parser.get("website", "port"))
 
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
 
-AUTH0_CALLBACK_URL = env.get('AUTH0_CALLBACK_URL')
-AUTH0_CLIENT_ID = env.get('AUTH0_CLIENT_ID')
-AUTH0_CLIENT_SECRET = env.get('AUTH0_CLIENT_SECRET')
-AUTH0_DOMAIN = env.get('AUTH0_DOMAIN')
-AUTH0_BASE_URL = 'https://' + AUTH0_DOMAIN
-AUTH0_AUDIENCE = env.get('AUTH0_AUDIENCE')
+AUTH0_CALLBACK_URL = env.get("AUTH0_CALLBACK_URL")
+AUTH0_CLIENT_ID = env.get("AUTH0_CLIENT_ID")
+AUTH0_CLIENT_SECRET = env.get("AUTH0_CLIENT_SECRET")
+AUTH0_DOMAIN = env.get("AUTH0_DOMAIN")
+AUTH0_BASE_URL = "https://" + AUTH0_DOMAIN
+AUTH0_AUDIENCE = env.get("AUTH0_AUDIENCE")
 
-PROFILE_KEY = 'profile'
-SECRET_KEY = env.get('SECRET_KEY')
-JWT_PAYLOAD = 'jwt_payload'
+PROFILE_KEY = "profile"
+SECRET_KEY = env.get("SECRET_KEY")
+JWT_PAYLOAD = "jwt_payload"
 
 # used for encoding datetime into iso format whenever sending to the frontend using the jsonify function
 class CustomJSONEncoder(JSONEncoder):
@@ -68,9 +68,7 @@ class CustomJSONEncoder(JSONEncoder):
 app = Flask(__name__, template_folder="client/templates", static_folder="client/static")
 app.json_encoder = CustomJSONEncoder
 app.secret_key = SECRET_KEY
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fgcvoexjvkhbau:fc57a05fd5b64d07fb6f190ebefe586357b34d910db070bff86e4d8c6f582993@ec2-3-251-0-202.eu-west-1.compute.amazonaws.com:5432/d8pm5u3ib1h51s'
-    
+
 
 oauth = OAuth(app)
 
@@ -80,22 +78,21 @@ oauth = OAuth(app)
 @app.errorhandler(Exception)
 def handle_auth_error(ex):
     response = jsonify(message=str(ex))
-    response.status_code = (ex.code if isinstance(ex, HTTPException) else 500)
+    response.status_code = ex.code if isinstance(ex, HTTPException) else 500
     return response
 
 
 auth0 = oauth.register(
-    'auth0',
+    "auth0",
     client_id=AUTH0_CLIENT_ID,
     client_secret=AUTH0_CLIENT_SECRET,
     api_base_url=AUTH0_BASE_URL,
-    access_token_url=AUTH0_BASE_URL + '/oauth/token',
-    authorize_url=AUTH0_BASE_URL + '/authorize',
+    access_token_url=AUTH0_BASE_URL + "/oauth/token",
+    authorize_url=AUTH0_BASE_URL + "/authorize",
     client_kwargs={
-        'scope': 'openid profile email',
+        "scope": "openid profile email",
     },
 )
-
 
 
 def login_required(f):
@@ -103,15 +100,6 @@ def login_required(f):
     def decorated(*args, **kwargs):
         if PROFILE_KEY not in session:
             return redirect("/login")
-        return f(*args, **kwargs)
-
-    decorated.__name__ = f.__name__
-    return decorated
-
-
-def has_accepted(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
         return f(*args, **kwargs)
 
     decorated.__name__ = f.__name__
@@ -147,7 +135,8 @@ def logout():
 
 @app.route("/")
 def render_home():
-    return redirect('/login')
+    return redirect("/login")
+
 
 @app.route("/bot")
 @login_required
@@ -156,6 +145,8 @@ def render_bot():
     if len(user) == 0:
         insert_into_users(session[JWT_PAYLOAD]["name"])
     return render_template("bot.html"), 200
+
+
 @app.route("/dashboard")
 @login_required
 def render_dashboard():
@@ -164,8 +155,7 @@ def render_dashboard():
 
 @app.route("/get_users", methods=["GET"])
 def return_users():
-    
-    
+
     return jsonify(get_users())
 
 
@@ -176,7 +166,6 @@ def return_user():
 
 
 @app.route("/conversation")
-@login_required
 @login_required
 def conversation():
     """
@@ -194,12 +183,11 @@ def get_input():
     Function that handles the API calls
     :return: 200 HTTP code
     """
-    
+
     data = request.form
     query = data["text"]
     text = handle_input(query)
-    
-    
+
     return jsonify(text)
 
 

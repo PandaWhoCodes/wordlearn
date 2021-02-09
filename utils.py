@@ -16,7 +16,7 @@ import random
 JWT_PAYLOAD = "jwt_payload"
 
 bigwords = set()
-dictionaryItems = []
+dictionaryItems = set()
 with open("words_set.txt", "r") as f:
     dictionaryItems = set(f.read().lower().split("\n"))
     for items in dictionaryItems:
@@ -39,8 +39,9 @@ def get_new_word():
 
 
 def is_possible(og_word, word):
+    print(og_word, word)
     if word.lower() not in dictionaryItems:
-        print('not in dictionary')
+        print("not in dictionary")
         return "not in dictionary"
     og_freq = get_freq(og_word)
     for ch, val in get_freq(word).items():
@@ -56,34 +57,30 @@ def shuffle_word(word):
     random.shuffle(str_var)
     return "  ".join(str_var)
 
+
 def handle_commands(command):
     command = command.lower()
- 
+
     if command in ["/new", "/skip"]:
         new_word = get_new_word()
         session["current_ans"] = []
-        insert_into_user_words(
-            get_user(session[JWT_PAYLOAD]["name"])[0][0], new_word
-        )
+        insert_into_user_words(get_user(session[JWT_PAYLOAD]["name"])[0][0], new_word)
         new_word = shuffle_word(new_word).upper()
         session["current_word"] = new_word
-        return ''
+        return ""
     elif command == "/start":
         word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])
         session["current_ans"] = []
-        session['score'] = 0
+        session["score"] = 0
         if word == ():
             word = get_new_word()
-            
-            insert_into_user_words(
-            get_user(session[JWT_PAYLOAD]["name"])[0][0], word
-            )
+
+            insert_into_user_words(get_user(session[JWT_PAYLOAD]["name"])[0][0], word)
         else:
             word = word[0][0]
-            
-       
+
         session["current_word"] = word.upper()
-        return ''
+        return ""
 
     elif command == "/shuffle":
         word = (
@@ -92,22 +89,22 @@ def handle_commands(command):
             else get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
         )
         word = shuffle_word(word).upper()
-        session['current_word'] = word
+        session["current_word"] = word
         return "Your reshuffled word is " + word
     elif command == "/show":
         if "current_word" in session:
-            return ''
+            return ""
         else:
-            return get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[
+            return get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][
                 0
-            ][0]
+            ]
 
     else:
         return "Wrong Command"
 
 
 def get_user_words(email):
-   
+
     data = get_user_data(get_user(email)[0][0])
     final_data = {}
     for user_word in data:
@@ -139,12 +136,13 @@ def conversation_log(func):
 
 @conversation_log
 def send_text(text):
-    
+
     return jsonify(text)
 
 
 def split_text(text):
     return text.lower().replace(" ", "").split(",")
+
 
 def add_score(is_proper):
     if "score" not in session:
@@ -158,14 +156,16 @@ def handle_input(message):
     try:
         response = {}
         if message.startswith("/"):
-            
-            response['text'] = handle_commands(message) 
-             
+
+            response["text"] = handle_commands(message)
+
         else:
 
-            og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
+            og_word = get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[
+                0
+            ][0]
             word = message
-            if word not in session["current_ans"]: 
+            if word not in session["current_ans"]:
                 session["current_ans"].append(word)
                 is_proper = is_possible(og_word, word.upper())
                 add_score(is_proper)
@@ -173,27 +173,21 @@ def handle_input(message):
                     insert_into_user_data(
                         get_user(session[JWT_PAYLOAD]["name"])[0][0], og_word, word
                     )
-                    response['text'] = 'valid'
+                    response["text"] = "valid"
                 else:
-                    response['text'] = 'invalid'
+                    response["text"] = "invalid"
             else:
-                response['text'] = ''
-            
-                 
-        word = (
-            session["current_word"]
-            if "current_word" in session
-            else ''
-       )
+                response["text"] = ""
 
-       
-        response['word'] = word
-        response['score'] = session['score']
-        print(message,response['text'])
+        word = session["current_word"] if "current_word" in session else ""
+
+        response["word"] = word
+        response["score"] = session["score"]
+        print(message, response["text"])
         return response
-                
+
     except Exception as e:
-        response['text'] = "Error " + str(e) + "</br>Try /start command to restart"
+        response["text"] = "Error " + str(e) + "</br>Try /start command to restart"
         return response
 
 
