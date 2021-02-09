@@ -47,11 +47,11 @@
                     <div class="validinvalid">
                         <div class="validinvalid_words" id="valid" >
                             <div>Valid words</div>
-                            <ul class='validinvalid_list' id="valid_list"></ul>
+                            <div class='validinvalid_list' id="valid_list"></div>
                         </div>
                         <div class="validinvalid_words" id="invalid" >
                             <div>Invalid words</div>
-                            <ul class='validinvalid_list' id='invalid_list'></ul>
+                            <div class='validinvalid_list' id='invalid_list'></div>
                         </div>
                     </div>
                     <div class="worddisplay" id="worddisplay">
@@ -212,12 +212,12 @@ function button_controls(input){
 function display_words(input,response){
     console.log(input,response);
     if (response == "valid"){
-      text = '<li>' + input + '</li>'
-      $("#valid_list").append(text);
+      text = $("#valid_list").html() + input + ', '
+      $("#valid_list").html(text);
     }
     else{
-      text = '<li>' + input + '</li>'
-      $("#invalid_list").append(text);
+      text = $("#invalid_list").html() + input + ', '
+      $("#invalid_list").html(text);
     }
 }
 
