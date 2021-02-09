@@ -520,13 +520,20 @@ input{
     width: 15%;
   }
   .top_menu .help{
-    width: 15% ;
+    width: 20% ;
   }
   .top_menu .head{
-    width: 70%;
+    width: 65%;
   }
   .top_menu .score{
-    width: 15%;
+    width: 20%;
+  }
+  .top_menu{
+    height: 20vh;
+
+  }
+  .displaywrapper{
+    height: 37vh;
   }
 }
 
