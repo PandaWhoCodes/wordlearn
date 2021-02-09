@@ -45,11 +45,11 @@
                 <div class="displaywrapper">
                     
                     <div class="validinvalid">
-                        <div class="validinvalid_words" id="valid">
+                        <div class="validinvalid_words" id="valid" >
                             <div>Valid words</div>
                             <ul class='validinvalid_list' id="valid_list"></ul>
                         </div>
-                        <div class="validinvalid_words" id="invalid">
+                        <div class="validinvalid_words" id="invalid" >
                             <div>Invalid words</div>
                             <ul class='validinvalid_list' id='invalid_list'></ul>
                         </div>
@@ -89,9 +89,7 @@
                   </div>
                 <div class="bottom_wrapper clearfix">
                     <div class='scrambledword'><br>Scrambled Word</div>
-                    <div class="message_input_wrapper">
-                        <div id="word_entered" class="word_entered"></div> 
-                    </div>
+                    <div class="message_input_wrapper" id="word_entered"></div>
                     <div class="control_buttons">
                       <div class="command_button" id="command_button">
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="new_button();">New</button>
@@ -126,6 +124,7 @@
 //   set_title();
 
 window.onload = function start(){
+  clear_button();
   button_controls('/start');
   $(".trigger_popup_fricc").click(function(){
        $('.hover_bkgr_fricc').show();

@@ -64,7 +64,7 @@ body {
   float: left;
   text-align: center;
   color: #337ab7;
-  width: 69%;
+  width: 65%;
   height: 65px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -92,7 +92,7 @@ body {
   color : #337ab7; 
   font-size: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  width: 12%;
+  width: 16%;
   height: 65px; 
   padding: 25px 0; 
 }
@@ -201,6 +201,13 @@ body {
   border-radius: 6px;
   overflow-y: auto;
   
+}
+#valid{
+  width: 50%;
+}
+
+#invalid{
+  width: 40%;
 }
 
 .validinvalid_list{
@@ -526,14 +533,16 @@ input{
     width: 65%;
   }
   .top_menu .score{
-    width: 20%;
+    width: auto;
   }
   .top_menu{
-    height: 20vh;
+    height: 18vh;
 
   }
   .displaywrapper{
     height: 37vh;
   }
+
+  
 }
 
