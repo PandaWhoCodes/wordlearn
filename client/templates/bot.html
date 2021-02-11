@@ -30,55 +30,56 @@
                         <div class="title" id="title">Word Scramble</div>
                         <div class="tag_line" id="tag_line"> A game to improve your vocabulary</div>
                     </div>
-                    <div class="help" > <a class="trigger_popup_fricc" > Help </a> </div>
+                    <!--<div class="help" > <a class="trigger_popup_fricc" > Help </a> </div>-->
                     <div class="score">
-                      Score:0
+                      0
                     </div>
-                    <div class="hover_bkgr_fricc">
+
+                    <!--<div class="hover_bkgr_fricc">
                       <span class="helper"></span>
                       <div>
                           <div class="popupCloseButton">&times;</div>
                           <p>You have received a scrambled word<br />Guess the words from the given letters and gain score</p>
                       </div>
-                  </div>
+                  </div>-->
                 </div>
                 <div class="displaywrapper">
                     
                     <div class="validinvalid">
                         <div class="validinvalid_words" id="valid" >
-                            <div>Valid words</div>
+                            <div class="heading">Valid words</div>
                             <div class='validinvalid_list' id="valid_list"></div>
                         </div>
                         <div class="validinvalid_words" id="invalid" >
-                            <div>Invalid words</div>
+                            <div class="heading">Invalid words</div>
                             <div class='validinvalid_list' id='invalid_list'></div>
                         </div>
                     </div>
                     <div class="worddisplay" id="worddisplay">
                         <div class="buttondisplay"><br><br> </div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="firstletter();" class="wordbutton" id="0" disabled="true">
+                            <input type="button" onclick="firstletter();" class="wordbutton" id="0" >
                         </div>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="secondletter();" class="wordbutton" id="5" disabled="true">
+                            <input type="button" onclick="secondletter();" class="wordbutton" id="5" >
                         </div><br>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="thirdletter();" class="wordbutton" id="1" disabled="true">
+                            <input type="button" onclick="thirdletter();" class="wordbutton" id="1" >
                         </div>
                         <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp</div>
                         <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp</div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="fourthletter();" class="wordbutton" id="4" disabled="true">
+                            <input type="button" onclick="fourthletter();" class="wordbutton" id="4" >
                         </div><br>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="fiffthletter();" class="wordbutton" id="2" disabled="true">
+                            <input type="button" onclick="fiffthletter();" class="wordbutton" id="2" >
                         </div>
                         <div class="buttondisplay"></div>
                         <div class="buttondisplay">
-                            <input type="button" onclick="sixthletter();" class="wordbutton" id="3" disabled="true">
+                            <input type="button" onclick="sixthletter();" class="wordbutton" id="3" >
                         </div>
                         
                         
@@ -88,8 +89,8 @@
                     
                   </div>
                 <div class="bottom_wrapper clearfix">
-                    <div class='scrambledword'><br>Scrambled Word</div>
-                    <input type="text" class="message_input_wrapper" id="word_entered" />
+                    <!--<div class='scrambledword'><br>Scrambled Word</div>-->
+                    <div  class="message_input_wrapper" id="word_entered" ></div>
                     <div class="control_buttons">
                       <div class="command_button" id="command_button">
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="new_button();">New</button>
@@ -153,6 +154,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 }
 
 
+
 function hid(){
 	sp.style.display = "none";
 }
@@ -200,8 +202,7 @@ function button_controls(input){
           console.log(response['score']);
           if (text=='valid' || text=='invalid'){
               display_words(input,text);
-              score = 'Score : ' + response['score'] 
-              $('.score').text(score);   
+              $('.score').text(response['score']);   
           }
       }
       
@@ -238,13 +239,19 @@ function shuffle_button(){
 
 function clear_button(){
   console.log('clear');
-  $("#word_entered").val("");
+  $("#word_entered").text("");
+  $("#0").prop('disabled',false);
+  $("#1").prop('disabled',false);
+  $("#2").prop('disabled',false);
+  $("#3").prop('disabled',false);
+  $("#4").prop('disabled',false);
+  $("#5").prop('disabled',false);
  
 }
 
 function enter_button(){
-  if ($("#word_entered").val() != ""){
-    let word_entered = $("#word_entered").val();
+  if ($("#word_entered").text() != ""){
+    let word_entered = $("#word_entered").text();
     button_controls(word_entered);
     clear_button();
     

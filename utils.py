@@ -17,11 +17,15 @@ JWT_PAYLOAD = "jwt_payload"
 
 bigwords = set()
 dictionaryItems = set()
-with open("words_set.txt", "r") as f:
+with open("words.txt", "r") as f:
     dictionaryItems = set(f.read().lower().split("\n"))
     for items in dictionaryItems:
         if len(items) == 6:
-            bigwords.add(items)
+            for i in items:
+                if i <= "a" or i >= "z":
+                    break
+            else:
+                bigwords.add(items)
 
 
 def get_freq(word):
