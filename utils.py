@@ -17,7 +17,7 @@ JWT_PAYLOAD = "jwt_payload"
 
 bigwords = set()
 dictionaryItems = set()
-with open("words.txt", "r") as f:
+with open("words_edited.txt", "r") as f:
     dictionaryItems = set(f.read().lower().split("\n"))
     for items in dictionaryItems:
         if len(items) == 6:
