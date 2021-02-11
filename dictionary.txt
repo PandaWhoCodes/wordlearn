@@ -14775,7 +14775,7 @@ hysteresis
 hysteria
 hysteric
 hysterical
-i1
+i
 i2
 -ial
 iambic
@@ -34500,7 +34500,6 @@ yaw
 yawl
 yawn
 yaws
-y
 ye1
 ye2
 yea
