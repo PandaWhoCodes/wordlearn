@@ -197,7 +197,7 @@ body {
 }
 .validinvalid_words .heading {
   font-size: 15px;
-
+  border-radius: 6px;
   background-color: lightgray;
 }
 #valid {
@@ -214,7 +214,7 @@ body {
   overflow-y: auto;
   list-style-type: none;
   font-size: 14px;
-  padding: 0;
+  padding: 1vh 1vh;
   margin: 0;
   text-align: left;
 }
