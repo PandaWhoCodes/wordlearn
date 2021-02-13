@@ -170,7 +170,9 @@ def handle_input(message):
             ][0]
             word = message.upper()
             if word not in session["current_ans"]:
+                print(session["current_ans"])
                 session["current_ans"].append(word)
+                print(session["current_ans"])
                 is_proper = is_possible(og_word, word.upper())
                 add_score(is_proper)
                 if is_proper == "valid":
