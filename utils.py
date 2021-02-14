@@ -184,7 +184,7 @@ def handle_input(message):
                     response["text"] = "invalid"
             else:
                 response["text"] = ""
-
+            print(session["current_ans"])
         word = session["current_word"] if "current_word" in session else ""
 
         response["word"] = word
