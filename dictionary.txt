@@ -1728,7 +1728,6 @@ Azalea
 Azimuth
 Aztec
 Azure
-B
 B.
 B. & b.
 B.f.
@@ -3362,7 +3361,6 @@ Byte
 Byway
 Byword
 Byzantine
-C
 C.
 C. & w.
 C. Of e.
@@ -6469,7 +6467,6 @@ Cytoplasm
 Czar
 Czech
 Czechoslovak
-D
 D-day
 D-layer
 D-notice
@@ -8302,7 +8299,6 @@ Décor
 Déjà vu
 Déshabillé
 Détente
-E
 E-number
 E. & o. E.
 E.g.
@@ -9411,7 +9407,6 @@ Eyesore
 Eyewash
 Eyewitness
 Eyrie
-F
 Fa
 Fab
 Fable
@@ -10936,7 +10931,6 @@ Fuzz
 Fuzzy
 Fête
 Führer
-G
 G-man
 G-string
 G-suit
@@ -12038,7 +12032,6 @@ Gyro-
 Gyrocompass
 Gyroscope
 Gîte
-H
 H-bomb
 H.
 H. & c.
@@ -14595,7 +14588,6 @@ Its
 Itself
 Ivory
 Ivory tower
-J
 J'adoube
 Jab
 Jabber
@@ -14908,7 +14900,6 @@ Juvenile court
 Juvenile delinquency
 Juvenilia
 Juxtapose
-K
 K.p.h.
 Kaffir
 Kafkaesque
@@ -15198,7 +15189,6 @@ Kung fu
 Kurchatovium
 Kyle
 Kümmel
-L
 L-plate
 L.b.w.
 L.c.
@@ -16338,7 +16328,6 @@ Lyrical
 Lyricism
 Lyricist
 Lysergic acid diethylamide
-M
 M.litt.
 M.p.g.
 M.p.h.
@@ -18151,7 +18140,6 @@ Mésalliance
 Métier
 Mêlée
 Möbius strip
-N
 N't
 Nab
 Nacho
@@ -18819,7 +18807,6 @@ Nymph
 Nympho
 Nymphomania
 Née
-O
 O level
 O'
 O'clock
@@ -19658,7 +19645,6 @@ Oyster-catcher
 Ozone
 Ozone layer
 Ozone-friendly
-P
 P. & p.
 P.a.
 P.c.
@@ -22301,7 +22287,6 @@ Python
 Pyx
 Pâté
 Pâté de foie gras
-Q
 Q.v.
 Qr.
 Qua
@@ -22470,7 +22455,6 @@ Quoth
 Quotidian
 Quotient
 Qwerty
-R
 R.
 R.h.
 Rabbet
@@ -24118,7 +24102,6 @@ Rye
 Ryegrass
 Résumé
 Röntgen
-S
 S-bend
 S.
 S.a.e.
@@ -27908,7 +27891,6 @@ Systematic
 Systematize
 Systemic
 Systems analysis
-T
 T'ai chi
 T'other
 T-bone
@@ -29715,7 +29697,6 @@ Tyrian purple
 Tyro
 Tzatziki
 Tête-à-tête
-U
 U-boat
 U-turn
 U.c.
@@ -30800,7 +30781,6 @@ Uttermost
 Uvula
 Uxorial
 Uxorious
-V
 V-neck
 V-sign
 V.
@@ -31286,7 +31266,6 @@ Vulpine
 Vulva
 Vv.
 Vying
-W
 W.
 W.p.m.
 W/cdr.
@@ -32297,7 +32276,6 @@ Wych-
 Wych-hazel
 Wykehamist
 Wysiwyg
-X
 X chromosome
 X-ray
 Xenon
@@ -32308,7 +32286,6 @@ Xi
 Xmas
 Xylem
 Xylophone
-Y
 Y chromosome
 Y-fronts
 Yacht
@@ -32430,7 +32407,6 @@ Yum-yum
 Yummy
 Yup
 Yuppie
-Z
 Zabaglione
 Zany
 Zap
