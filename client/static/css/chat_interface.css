@@ -156,7 +156,7 @@ body {
   font-weight: bold;
 }
 .displaywrapper {
-  height: 45vh;
+  height: 53vh;
 }
 
 .score {
@@ -166,17 +166,17 @@ body {
 }
 .worddisplay {
   text-align: center;
-  border: 10px black;
-  line-height: 0.5vh;
+  /*border: 10px black;*/
+  line-height: 3vh;
   font-size: 30;
   font-family: Verdana, sans-serif;
   padding: 0 0;
 
-  height: 15vh;
+  height: 25vh;
 }
 .validinvalid {
   text-align: center;
-  border: 10px black;
+  /*border: 10px black;*/
   height: 20vh;
   font-size: 20px;
   font-family: Verdana, sans-serif;
@@ -185,20 +185,21 @@ body {
 }
 .validinvalid_words {
   display: inline-block;
-  border: 1px black;
-  border-style: solid;
+  /*border: 1px black;
+  border-style: solid;*/
   height: 17vh;
   max-height: 17vh;
   width: 30%;
   text-align: center;
   border-radius: 6px;
+  background-color: lightgray;
 
   vertical-align: top;
 }
 .validinvalid_words .heading {
   font-size: 15px;
   border-radius: 6px;
-  background-color: lightgray;
+  background-color: whitesmoke;
 }
 #valid {
   width: 50%;
@@ -223,15 +224,16 @@ body {
 }
 
 .wordbutton {
-  background-color: white;
+  background-color: whitesmoke;
 
-  border: 2px solid black;
+  /*border: 2px solid black;*/
   padding: 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 15px;
-
+  width: 9vh;
+  height: 8vh;
   border-radius: 12px;
 }
 
@@ -445,8 +447,8 @@ body {
   justify-content: space-between;
 }
 .control_buttons .command_button {
-  width: 110px;
-  height: 50px;
+  width: 15vh;
+  height: 7vh;
   display: inline-block;
   /* border-radius: 50px;
   background-color: #ffffff;
