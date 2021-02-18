@@ -156,7 +156,7 @@ body {
   font-weight: bold;
 }
 .displaywrapper {
-  height: 53vh;
+  height: 60vh;
 }
 
 .score {
@@ -398,13 +398,13 @@ body {
 .bottom_wrapper .message_input_wrapper {
   display: inline-block;
   align-items: center;
-  text-align: center;
-  height: calc(100% - 93%);
+  text-align: left;
+  height: calc(100% - 90%);
   border-radius: 25px;
   border: 1px solid #bcbdc0;
   width: 100%;
   position: relative;
-  padding: 10 60px;
+  padding: 2% 15px;
   font-size: 20px;
 }
 .bottom_wrapper .message_input_wrapper .word_entered {
@@ -558,6 +558,6 @@ body {
   }
 
   .bottom_wrapper .message_input_wrapper {
-    font-size: 15px;
+    font-size: ;
   }
 }
