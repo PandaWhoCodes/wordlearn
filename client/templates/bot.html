@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/article.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300|Open+Sans:300|Oxygen|Material+Icons" rel="stylesheet">
+    
 	<title>Word Scramble</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
@@ -72,8 +73,12 @@
                         <div class="buttondisplay">
                             <input type="button" onclick="thirdletter();" class="wordbutton" id="1" >
                         </div>
-                        <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-                        <div class="buttondisplay">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+                        <div class="buttondisplay">
+                          <div class="enter_button" id="command_button">
+                            <button id="start" type="button" class="btn_enter" style="color: black" onclick="enter_button();">Enter</button>
+                          </div>
+                        </div>
+                        
                         <div class="buttondisplay">
                             <input type="button" onclick="fourthletter();" class="wordbutton" id="4" >
                         </div><br>
@@ -107,8 +112,9 @@
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="shuffle_button();">Shuffle</button>
                       </div>
                       <div class="command_button" id="command_button">
-                        <button id="start" type="button" class="btn btn-success" style="color: black" onclick="enter_button();">Enter</button>
+                        <button id="start" type="button"  class="back_button"  onclick="back_button();"> </button>
                       </div>
+                      
                     </div>
                 </div>
                 
@@ -121,7 +127,7 @@
 
 <footer>
 </footer>
-<script src="{{url_for('static',filename='js/main.js')}}"></script>
+<script src="{{url_for('static',filename='js/main.js')}}" ></script>
 <script src="{{url_for('static',filename='js/circle.js')}}"></script>
 
   <script type="text/javascript">
@@ -129,6 +135,7 @@
 //   set_title();
 let valid_words = [];
 let invalid_words = [];
+
 window.onload = function start(){
   clear_button();
   button_controls('/start');
@@ -172,6 +179,7 @@ function vi(){
 }
 
 var word =[]
+let entered_letters = []
 function circularText(text) {
     word = [];
     let letter;
@@ -275,37 +283,51 @@ function enter_button(){
   
 }
 
+function back_button(){
+  if ($("#word_entered").text() != ""){
+    let word_entered = $("#word_entered").text();
+    $("#word_entered").text(word_entered.slice(0,-1));
+    $(entered_letters.pop()).prop('disabled',false);
+  }
+}
+
 function firstletter(){
     let exist = $("#word_entered").text() + word[0];
     $("#word_entered").text(exist);
     $("#0").prop('disabled',true);
+    entered_letters.push('#0');
 }
 function secondletter(){
     let exist = $("#word_entered").text() + word[5];
     $("#word_entered").text(exist);
     $("#5").prop('disabled',true);
+    entered_letters.push('#5');
 }
 
 function thirdletter(){
     let exist = $("#word_entered").text() + word[1];
     $("#word_entered").text(exist);
     $("#1").prop('disabled',true);
+    entered_letters.push('#1');
 }
 
 function fourthletter(){
     let exist = $("#word_entered").text() + word[4];
     $("#word_entered").text(exist);
     $("#4").prop('disabled',true);
+    entered_letters.push('#4');
 }
 function fiffthletter(){
     let exist = $("#word_entered").text() + word[2];
     $("#word_entered").text(exist);
     $("#2").prop('disabled',true);
+    entered_letters.push('#2');
 }
 function sixthletter(){
     let exist = $("#word_entered").text() + word[3];
     $("#word_entered").text(exist);
     $("#3").prop('disabled',true);
+    entered_letters.push('#3');
 }
 
 

@@ -400,12 +400,13 @@ body {
   align-items: center;
   text-align: left;
   height: calc(100% - 90%);
-  border-radius: 25px;
+  border-radius: 6px;
   border: 1px solid #bcbdc0;
   width: 100%;
   position: relative;
   padding: 2% 15px;
-  font-size: 20px;
+  font-size: 3vh;
+  vertical-align: middle;
 }
 .bottom_wrapper .message_input_wrapper .word_entered {
   border: none;
@@ -416,6 +417,7 @@ body {
   outline-width: 0;
   color: gray;
   font-size: 30px;
+  vertical-align: middle;
 }
 .bottom_wrapper .send_message {
   width: 110px;
@@ -434,7 +436,23 @@ body {
   /* color: #dddddd;
   background-color: #dddddd; */
 }
-
+.enter_button {
+  width: 15vh;
+  height: 6vh;
+  display: inline-block;
+}
+.enter_button .btn_enter {
+  font-family: Raleway-SemiBold;
+  font-size: 18px;
+  background-color: rgba(103, 192, 103, 0.75);
+  letter-spacing: 1px;
+  line-height: 50%;
+  border: 2px solid green;
+  border-radius: 40px;
+  transition: all 0.3s ease 0s;
+  width: 95%;
+  height: 100%;
+}
 .control_buttons {
   position: relative;
   width: 100%;
@@ -458,6 +476,16 @@ body {
   /* transition: all 0.2s linear; */
   text-align: center;
   float: left;
+}
+
+.back_button {
+  border: 2px solid rgba(103, 192, 103, 0.75);
+  background-image: url("../img/back.png");
+  width: 95%;
+  height: 100%;
+  border-radius: 40px;
+  background-size: 95% 100%;
+  background-repeat: no-repeat;
 }
 .btn-success {
   font-family: Raleway-SemiBold;
