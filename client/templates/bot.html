@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="bottom_wrapper clearfix">
-                        <div  class="message_input_wrapper" id="word_entered" ></div> 
+                        <input type="text"  class="message_input_wrapper" id="word_entered" onkeydown="return myKeyPress(event)"/> 
                     </div>
                     
                     <div class="worddisplay" id="worddisplay">
@@ -171,7 +171,7 @@ function hid(){
 	sp.style.display = "none";
 }
 function vi(){
-	if(!document.getElementById('msg_input').value){
+	if(!document.getElementById('msg_input').val){
 		sp.style.display = "inline-block";
 	}else{
 		hid();
@@ -229,7 +229,7 @@ function display_words(input,response){
     input = input.toUpperCase();
     if (response == "valid"){
       text = $("#valid_list").html() + input + ', '
-      $("#valid_list").html(text);
+      $("#valid_list").html(text);9
       valid_words.push(input);
     }
     else{
@@ -256,7 +256,7 @@ function shuffle_button(){
 
 function clear_button(){
   console.log('clear');
-  $("#word_entered").text("");
+  $("#word_entered").val("");
   $("#0").prop('disabled',false);
   $("#1").prop('disabled',false);
   $("#2").prop('disabled',false);
@@ -267,9 +267,10 @@ function clear_button(){
 }
 
 function enter_button(){
-  if ($("#word_entered").text() != ""){
+  if ($("#word_entered").val() != ""){
 
-    let word_entered = $("#word_entered").text();
+    let word_entered = $("#word_entered").val();
+    entered_letters = [];
     if (valid_words.includes(word_entered) || invalid_words.includes(word_entered)){
       clear_button();
     } 
@@ -283,51 +284,92 @@ function enter_button(){
   
 }
 
-function back_button(){
-  if ($("#word_entered").text() != ""){
-    let word_entered = $("#word_entered").text();
-    $("#word_entered").text(word_entered.slice(0,-1));
-    $(entered_letters.pop()).prop('disabled',false);
+function myKeyPress(e){
+  var keynum;
+  let index;
+  console.log('in keypress');
+  if(window.event) { // IE                  
+    keynum = e.keyCode;
+
+  } else if(e.which){ // Netscape/Firefox/Opera                 
+    keynum = e.which;
+  }
+  console.log(keynum,'keynum');
+  if (keynum == 8 && entered_letters.length>0){
+    console.log('in backspace');
+    let id = entered_letters.pop();
+    $(id).prop('disabled',false);
+  }
+  else if(keynum == 13){
+    enter_button();
+  }
+  else{
+    let user_input = String.fromCharCode(keynum).toUpperCase();
+    let letter_add = false;
+    for (let i=0; i<6; i++){
+      if ((entered_letters.indexOf('#'+i)==-1)&&(word[i]==user_input)){
+        index = i;
+        letter_add = true;
+        break;
+      }
+    }
+    if(letter_add){
+      $('#'+index).prop('disabled',true);
+      entered_letters.push('#'+index);
+    }
+    else{
+      
+      e.preventDefault();
+    }
   }
 }
 
 function firstletter(){
-    let exist = $("#word_entered").text() + word[0];
-    $("#word_entered").text(exist);
+    let exist = $("#word_entered").val() + word[0];
+    $("#word_entered").val(exist);
     $("#0").prop('disabled',true);
     entered_letters.push('#0');
 }
 function secondletter(){
-    let exist = $("#word_entered").text() + word[5];
-    $("#word_entered").text(exist);
+    let exist = $("#word_entered").val() + word[5];
+    $("#word_entered").val(exist);
     $("#5").prop('disabled',true);
     entered_letters.push('#5');
 }
 
 function thirdletter(){
-    let exist = $("#word_entered").text() + word[1];
-    $("#word_entered").text(exist);
+    let exist = $("#word_entered").val() + word[1];
+    $("#word_entered").val(exist);
     $("#1").prop('disabled',true);
     entered_letters.push('#1');
 }
 
 function fourthletter(){
-    let exist = $("#word_entered").text() + word[4];
-    $("#word_entered").text(exist);
+    let exist = $("#word_entered").val() + word[4];
+    $("#word_entered").val(exist);
     $("#4").prop('disabled',true);
     entered_letters.push('#4');
 }
 function fiffthletter(){
-    let exist = $("#word_entered").text() + word[2];
-    $("#word_entered").text(exist);
+    let exist = $("#word_entered").val() + word[2];
+    $("#word_entered").val(exist);
     $("#2").prop('disabled',true);
     entered_letters.push('#2');
 }
 function sixthletter(){
-    let exist = $("#word_entered").text() + word[3];
-    $("#word_entered").text(exist);
+    let exist = $("#word_entered").val() + word[3];
+    $("#word_entered").val(exist);
     $("#3").prop('disabled',true);
     entered_letters.push('#3');
+}
+
+function back_button(){
+  if ($("#word_entered").val() != ""){
+    let word_entered = $("#word_entered").val();
+    $("#word_entered").val(word_entered.slice(0,-1));
+    console.log(typeof(entered_letters))
+    $(entered_letters.pop()).prop('disabled',false);
+  }
 }
 
 
