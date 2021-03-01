@@ -57,7 +57,10 @@
                         </div>
                     </div>
                     <div class="bottom_wrapper clearfix">
-                        <input type="text"  class="message_input_wrapper" id="word_entered" onkeydown="return myKeyPress(event)"/> 
+                        <div class="message_wrapper">
+                            <input type="text"  class="word_entered" id="word_entered" onkeydown="return myKeyPress(event)"/>
+                            <button id="start" type="button"  class="back_button"  onclick="back_button();"> </button> 
+                         </div>
                     </div>
                     
                     <div class="worddisplay" id="worddisplay">
@@ -111,9 +114,9 @@
                       <div class="command_button" id="command_button">
                         <button id="start" type="button" class="btn btn-success" style="color: black" onclick="shuffle_button();">Shuffle</button>
                       </div>
-                      <div class="command_button" id="command_button">
-                        <button id="start" type="button"  class="back_button"  onclick="back_button();"> </button>
-                      </div>
+                     <!-- <div >
+                        
+                      </div>-->
                       
                     </div>
                 </div>

@@ -396,7 +396,7 @@ body {
   bottom: 0;
   vertical-align: bottom;
 }
-.bottom_wrapper .message_input_wrapper {
+.bottom_wrapper .message_wrapper {
   display: inline-block;
   align-items: center;
   text-align: left;
@@ -409,16 +409,29 @@ body {
   font-size: 3vh;
   vertical-align: middle;
 }
-.bottom_wrapper .message_input_wrapper .word_entered {
+.bottom_wrapper .message_input_wrapper {
+  display: inline-block;
+  align-items: center;
+  text-align: left;
+  height: calc(100% - 90%);
+
+  width: 90%;
+  position: relative;
+  padding: 2% 15px;
+  font-size: 3vh;
+  vertical-align: middle;
+}
+.word_entered {
   border: none;
-  height: 100%;
-  box-sizing: border-box;
+  height: 80%;
+
   width: calc(100% - 100px);
   position: absolute;
-  outline-width: 0;
+
   color: gray;
   font-size: 30px;
   vertical-align: middle;
+  float: left;
 }
 .bottom_wrapper .send_message {
   width: 110px;
@@ -480,13 +493,13 @@ body {
 }
 
 .back_button {
-  border: 2px solid rgba(103, 192, 103, 0.75);
   background-image: url("../img/back.png");
-  width: 80%;
-  height: 100%;
-  border-radius: 40px;
   background-size: 95% 100%;
   background-repeat: no-repeat;
+  width: 10%;
+  height: 100%;
+  border: none;
+  float: right;
 }
 .btn-success {
   font-family: Raleway-SemiBold;
