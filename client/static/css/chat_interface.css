@@ -395,17 +395,18 @@ body {
   /*position: absolute;*/
   bottom: 0;
   vertical-align: bottom;
+  height: 8vh;
 }
 .bottom_wrapper .message_wrapper {
   display: inline-block;
   align-items: center;
   text-align: left;
-  height: calc(100% - 90%);
+  height: 7vh;
   border-radius: 6px;
   border: 1px solid #bcbdc0;
   width: 100%;
   position: relative;
-  padding: 2% 15px;
+  padding: 0.5vh 15px;
   font-size: 3vh;
   vertical-align: middle;
 }
@@ -413,7 +414,7 @@ body {
   display: inline-block;
   align-items: center;
   text-align: left;
-  height: calc(100% - 90%);
+  height: 7vh;
 
   width: 90%;
   position: relative;
@@ -423,7 +424,7 @@ body {
 }
 .word_entered {
   border: none;
-  height: 80%;
+  height: 6vh;
 
   width: calc(100% - 100px);
   position: absolute;

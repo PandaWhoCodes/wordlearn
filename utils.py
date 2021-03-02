@@ -12,20 +12,20 @@ from database.database_functions import (
     insert_into_logs,
 )
 import random
+import json
 
 JWT_PAYLOAD = "jwt_payload"
 
 bigwords = set()
-dictionaryItems = set()
-with open("dictionary.txt", "r") as f:
-    dictionaryItems = set(f.read().lower().split("\n"))
-    for items in dictionaryItems:
-        if len(items) == 6:
-            for i in items:
-                if i <= "a" or i >= "z":
-                    break
-            else:
-                bigwords.add(items)
+dictionaryItems = {}
+with open("data.json", "r") as f:
+    dictionaryItems = json.load(f)
+    f.close()
+with open("sixletterwords.txt", "r") as f:
+    words = f.read().split("\n")
+    for word in words:
+        if len(word) == 6:
+            bigwords.add(word)
 
 
 def get_freq(word):
@@ -148,11 +148,11 @@ def split_text(text):
     return text.lower().replace(" ", "").split(",")
 
 
-def add_score(is_proper):
+def add_score(is_proper, word):
     if "score" not in session:
         session["score"] = 0
     if is_proper == "valid":
-        session["score"] += 1
+        session["score"] += dictionaryItems[word.lower()] * len(word)
 
 
 def handle_input(message):
@@ -174,7 +174,7 @@ def handle_input(message):
                 session["current_ans"].append(word)
                 print(session["current_ans"])
                 is_proper = is_possible(og_word, word.upper())
-                add_score(is_proper)
+                add_score(is_proper, word)
                 if is_proper == "valid":
                     insert_into_user_data(
                         get_user(session[JWT_PAYLOAD]["name"])[0][0], og_word, word
