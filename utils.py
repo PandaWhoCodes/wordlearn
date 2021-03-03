@@ -16,6 +16,19 @@ import json
 
 JWT_PAYLOAD = "jwt_payload"
 
+
+def is_big_word(word):
+    word = word.strip()
+    if len(word) != 6:
+        return False
+    for w in word:
+        if (w >= "a" and w <= "z") or (w >= "A" or w <= "Z"):
+            pass
+        else:
+            return False
+    return True
+
+
 bigwords = set()
 dictionaryItems = {}
 with open("data.json", "r") as f:
@@ -24,7 +37,7 @@ with open("data.json", "r") as f:
 with open("sixletterwords.txt", "r") as f:
     words = f.read().split("\n")
     for word in words:
-        if len(word) == 6:
+        if len(word) == 6 and is_big_word(word):
             bigwords.add(word)
 
 
@@ -92,6 +105,7 @@ def handle_commands(command):
             if "current_word" in session
             else get_last_user_word(get_user(session[JWT_PAYLOAD]["name"])[0][0])[0][0]
         )
+        print(word)
         word = shuffle_word(word).upper()
         session["current_word"] = word
         return "Your reshuffled word is " + word

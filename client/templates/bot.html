@@ -334,6 +334,7 @@ function firstletter(){
     entered_letters.push('#0');
 }
 function secondletter(){
+    console.log(word[5]);
     let exist = $("#word_entered").val() + word[5];
     $("#word_entered").val(exist);
     $("#5").prop('disabled',true);
