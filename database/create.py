@@ -1,19 +1,15 @@
 import pymysql
 from dotenv import load_dotenv, find_dotenv
-from os import environ as env
-ENV_FILE = find_dotenv()
-if ENV_FILE:
-    load_dotenv(ENV_FILE)
+import secrets
 
-db_name = env.get("db_name")
-db_host = env.get("db_host")
-db_user = env.get("db_user")
-db_pass = env.get("db_pass")
-
+db_name = secrets.db_name
+db_host = secrets.db_host
+db_user = secrets.db_user
+db_pass = secrets.db_pass
 
 
 def create_connection(db):
-    """ create a database connection to the SQLite database
+    """create a database connection to the SQLite database
         specified by db_file
     :param db_file: database file
     :return: Connection object or None
@@ -21,10 +17,8 @@ def create_connection(db):
     try:
         print(type(db_host))
         db = pymysql.connect(
-            host=db_host,
-            user=db_user,
-            password=db_pass,
-            database=db_name)
+            host=db_host, user=db_user, password=db_pass, database=db_name
+        )
         return db
     except Exception as e:
         print("Connection to the database could not be created: ", e)
@@ -32,7 +26,7 @@ def create_connection(db):
 
 
 def create_tables(conn, create_table_sql):
-    """ create a table from the create_table_sql statement
+    """create a table from the create_table_sql statement
     :param conn: Connection object
     :param create_table_sql: a CREATE TABLE statement
     :return:

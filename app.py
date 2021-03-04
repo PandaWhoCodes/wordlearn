@@ -28,6 +28,7 @@ from utils import handle_input, send_text, get_user_words, conversation_log
 from dotenv import load_dotenv, find_dotenv
 
 from werkzeug.exceptions import HTTPException
+import secrets
 
 # Getting the environment settings
 # parser = ConfigParser()
@@ -36,19 +37,15 @@ from werkzeug.exceptions import HTTPException
 # PORT = int(parser.get("website", "port"))
 
 
-ENV_FILE = find_dotenv()
-if ENV_FILE:
-    load_dotenv(ENV_FILE)
-
-AUTH0_CALLBACK_URL = env.get("AUTH0_CALLBACK_URL")
-AUTH0_CLIENT_ID = env.get("AUTH0_CLIENT_ID")
-AUTH0_CLIENT_SECRET = env.get("AUTH0_CLIENT_SECRET")
-AUTH0_DOMAIN = env.get("AUTH0_DOMAIN")
+AUTH0_CALLBACK_URL = secrets.AUTH0_CALLBACK_URL
+AUTH0_CLIENT_ID = secrets.AUTH0_CLIENT_ID
+AUTH0_CLIENT_SECRET = secrets.AUTH0_CLIENT_SECRET
+AUTH0_DOMAIN = secrets.AUTH0_DOMAIN
 AUTH0_BASE_URL = "https://" + AUTH0_DOMAIN
-AUTH0_AUDIENCE = env.get("AUTH0_AUDIENCE")
+AUTH0_AUDIENCE = secrets.AUTH0_AUDIENCE
 
 PROFILE_KEY = "profile"
-SECRET_KEY = env.get("SECRET_KEY")
+SECRET_KEY = secrets.SECRET_KEY
 JWT_PAYLOAD = "jwt_payload"
 
 # used for encoding datetime into iso format whenever sending to the frontend using the jsonify function
